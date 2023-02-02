@@ -1,11 +1,10 @@
-# React App boilerplate
+# React Chat-App
 
 ## Setup
 
 ```bash
 make install
 ```
-
 ## Development
 
 ```bash
