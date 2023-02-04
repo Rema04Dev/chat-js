@@ -8,6 +8,15 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import routes from '../../utils/routes'
 
+const INPUT_LENGTHS = {
+    username: 3,
+    password: 4,
+}
+const ERRORS_MESSAGES = {
+    usernameMinLength: `Имя должно содержать минимум ${INPUT_LENGTHS.username}`,
+    passwordMinLength: `Пароль должен содержать минимум ${INPUT_LENGTHS.password}`
+}
+
 const LoginPage = () => {
     const [errorMessage, setErrorMessage] = useState(null);
     const navigate = useNavigate();
@@ -41,11 +50,11 @@ const LoginPage = () => {
         validationSchema: Yup.object({
             username: Yup
                 .string()
-                .min(3, 'Логин должен содержать минимум 3 символа')
+                .min(INPUT_LENGTHS.username, ERRORS_MESSAGES.usernameMinLength)
                 .required('Обязательное поле'),
             password: Yup
                 .string()
-                .min(4, 'Пароль должен содержать минимум 4 символа')
+                .min(INPUT_LENGTHS.password, ERRORS_MESSAGES.passwordMinLength)
                 .required('Обязательное поле')
         })
     })
