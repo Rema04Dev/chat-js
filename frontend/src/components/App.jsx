@@ -15,7 +15,6 @@ const App = () => {
     }, []);
     return (
         <>
-<<<<<<< HEAD
             <AuthContext.Provider value={{ user, logIn }}>
                 <Routes>
                     <Route element={<PrivateRoute />}>
@@ -25,14 +24,6 @@ const App = () => {
                     <Route path='*' element={<NotFoundPage />} />
                 </Routes>
             </AuthContext.Provider>
-=======
-            <Routes>
-                <Route path='/' element={<LoginPage />} />
-                <Route path='/login' element={<LoginPage />} />
-                <Route path='/sign-up' element={<SignUpPage />} />
-                <Route path='*' element={<NotFoundPage />} />
-            </Routes>
->>>>>>> cf21866345f2bf1c11e3e592e67884498ea10845
         </>
     );
 };
