@@ -8,10 +8,6 @@ import PrivateRoute from './PrivateRoute'
 import { useCallback } from 'react';
 const App = () => {
     const [user, setUser] = useState(null);
-    // const logIn = (userData, token) => {
-    //     localStorage.setItem('user', { ...userData, token });
-    //     setUser(true);
-    // }
     const logIn = useCallback((user) => {
         localStorage.setItem('user', JSON.stringify(user));
         setUser(true);
