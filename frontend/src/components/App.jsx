@@ -21,6 +21,7 @@ const App = () => {
                         <Route path='/' element={<MainPage />} />
                     </Route>
                     <Route path='/login' element={<LoginPage />} />
+                    <Route path='/sign-up' element={<SignUpPage />} />
                     <Route path='*' element={<NotFoundPage />} />
                 </Routes>
             </AuthContext.Provider>
