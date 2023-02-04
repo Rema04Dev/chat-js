@@ -29,8 +29,7 @@ const LoginPage = () => {
                     const status = await response.data.error;
                     throw new Error(status);
                 }
-                const token = await response.data;
-                logIn({ ...userData, token })
+                logIn({ username: userData.username })
                 navigate('/');
             } catch (e) {
                 setErrorMessage(e.response.statusText)
