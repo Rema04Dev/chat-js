@@ -1,11 +1,9 @@
 import { useState, useCallback } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import MainPage from './pages/MainPage';
-import LoginPage from "./pages/LoginPage";
-import SignUpPage from './pages/SignUpPage';
-import NotFoundPage from "./pages/NotFoundPage";
+import { MainPage, LoginPage, SignUpPage, NotFoundPage } from './pages'
 import AuthContext from '../contexts/AuthContext';
-import PrivateRoute from './PrivateRoute'
+import PrivateRoute from './PrivateRoute';
+
 const App = () => {
     const currentUser = JSON.parse(localStorage.getItem('user'));
     const [user, setUser] = useState(currentUser ? { username: currentUser.user } : null);
