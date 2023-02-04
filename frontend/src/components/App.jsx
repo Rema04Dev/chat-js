@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import LoginPage from "./pages/LoginPage";
@@ -11,7 +11,7 @@ const App = () => {
     const logIn = useCallback((user) => {
         localStorage.setItem('user', JSON.stringify(user));
         setUser(true);
-    })
+    }, []);
     return (
         <>
             <AuthContext.Provider value={{ user, logIn }}>
