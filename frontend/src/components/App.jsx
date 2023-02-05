@@ -11,9 +11,13 @@ const App = () => {
         localStorage.setItem('user', JSON.stringify(user));
         setUser(user);
     }, []);
+    const logOut = useCallback(() => {
+        localStorage.removeItem('user');
+        setUser(null);
+    }, []);
     return (
         <>
-            <AuthContext.Provider value={{ user, logIn }}>
+            <AuthContext.Provider value={{ user, logIn, logOut }}>
                 <Routes>
                     <Route element={<PrivateRoute />}>
                         <Route path='/' element={<MainPage />} />

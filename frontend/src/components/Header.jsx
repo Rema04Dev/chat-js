@@ -1,5 +1,8 @@
 import { Navbar, Container, Button } from 'react-bootstrap';
+import { useContext } from 'react';
+import AuthContext from '../contexts/AuthContext';
 const Header = () => {
+    const { logOut } = useContext(AuthContext);
     return (
         <>
             <Navbar bg="dark" variant="dark">
@@ -7,7 +10,7 @@ const Header = () => {
                     <Navbar.Brand>
                         Chat JS
                     </Navbar.Brand>
-                    <Button>Выйти</Button>
+                    <Button onClick={logOut}>Выйти</Button>
                 </Container>
             </Navbar>
         </>
