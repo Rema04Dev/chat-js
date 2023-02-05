@@ -1,6 +1,10 @@
+import Header from '../Header';
 const MainPage = () => {
     return (
-        <div>MainPage</div>
+        <>
+            <Header />
+            <div>MainPage</div>
+        </>
     )
 }
 
