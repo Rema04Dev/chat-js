@@ -11,7 +11,7 @@ start-backend:
 	npx start-server
 
 deploy:
-	git push heroku main
+	railway up
 
 start:
 	make start-backend & make start-frontend
