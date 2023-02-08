@@ -38,7 +38,7 @@ const LoginPage = () => {
                     const status = await response.data.error;
                     throw new Error(status);
                 }
-                logIn({ username: userData.username })
+                logIn({ ...response.data })
                 navigate('/');
             } catch (e) {
                 const message = e.response.statusText === 'Unauthorized' ? 'Неверный логин или пароль' : 'Неизвестная ошибка'

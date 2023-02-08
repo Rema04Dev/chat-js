@@ -6,7 +6,7 @@ import PrivateRoute from './PrivateRoute';
 
 const App = () => {
     const currentUser = JSON.parse(localStorage.getItem('user'));
-    const [user, setUser] = useState(currentUser ? { username: currentUser.user } : null);
+    const [user, setUser] = useState(currentUser ? currentUser : null);
     const logIn = useCallback((user) => {
         localStorage.setItem('user', JSON.stringify(user));
         setUser(user);
