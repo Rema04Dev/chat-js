@@ -1,10 +1,11 @@
 import { useEffect, useContext, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import cn from 'classnames';
 import { io } from 'socket.io-client';
 import axios from 'axios';
 import routes from '../../utils/routes';
 import AuthContext from '../../contexts/AuthContext';
-import { channelsFethced } from '../../store/slices/channelsSlice';
+import { channelsFethced, setCurrentChannelId } from '../../store/slices/channelsSlice';
 import { messagesFetched, addMessage } from '../../store/slices/messagesSlice';
 
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
@@ -13,14 +14,13 @@ import Header from '../Header';
 
 const formatMessage = (text) => text.trim();
 const MainPage = () => {
-    const channels = useSelector(state => state.channels.channels);
+    const { channels, currentChannelId } = useSelector(state => state.channels);
     const messages = useSelector(state => state.messages.messages);
     const dispatch = useDispatch();
     const { user } = useContext(AuthContext);
     const { username, token } = user;
     const [message, setMessage] = useState('');
     const socket = io();
-    // socket.emit('removeChannel', { id: 1 });
     const handleChange = ({ target: { value } }) => setMessage(value);
     const handleSubmit = async (evt) => {
         evt.preventDefault();
@@ -34,7 +34,6 @@ const MainPage = () => {
         }
         await socket.emit('newMessage', { ...formattedMessage });
         dispatch(addMessage(formattedMessage));
-        console.log(messages);
         setMessage('');
     }
 
@@ -46,7 +45,6 @@ const MainPage = () => {
             const data = await response.data;
             dispatch(channelsFethced(data.channels))
             dispatch(messagesFetched(data.messages))
-            console.log(channels);
         };
 
         getData();
@@ -56,13 +54,20 @@ const MainPage = () => {
         if (channels.length === 0) {
             return <span>Каналов нет</span>
         }
-        return channels.map(({ id, name }) => (
-            <li key={id} className="nav-item w-100">
-                <button type="button" className="w-100 text-start rounded-0 btn btn-outline-secondary">
+        return channels.map(({ id, name }) => {
+            const channelCSS = cn('btn', {
+                'btn-secondary': id === currentChannelId,
+                'btn-outline-secondary': id !== currentChannelId
+            })
+            return <li key={id} className="nav-item w-100">
+                <button
+                    onClick={() => dispatch(setCurrentChannelId(id))}
+                    type="button"
+                    className={`w-100 text-start rounded-0 ${channelCSS}`}>
                     <span className="me-1">#</span>{name}
                 </button>
             </li>
-        ))
+        })
     }
 
     const renderMessages = () => {
@@ -95,7 +100,7 @@ const MainPage = () => {
                             <p className="m-0">
                                 <b># random</b>
                             </p>
-                            <span className="text-muted">1 сообщение</span>
+                            <span className="text-muted">{messages.length} сообщение</span>
                         </div>
                             <div id="messages-box" className="chat-messages overflow-auto px-5" style={{ minHeight: '60vh' }}>
                                 {renderMessages()}
