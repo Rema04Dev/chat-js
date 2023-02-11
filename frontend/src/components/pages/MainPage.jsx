@@ -21,28 +21,39 @@ import {
 import { Plus, ArrowRight } from 'react-bootstrap-icons';
 import Header from '../Header';
 import AddModal from '../modals/AddModal';
+import RemoveModal from '../modals/RemoveModal';
 const formatMessage = (text) => text.trim();
 const socket = io.connect('http://localhost:3000')
 // const socket = io.connect('http://localhost:5001')
 
 
 const MainPage = () => {
-    useEffect(() => {
-        const createUser = async () => {
-            await axios.post('/api/v1/signup', { username: 'ramon04', password: 'qwerty' }).then((response) => {
-                console.log(response.data); // => { token: ..., username: 'newuser' }
-            });
-            await axios.post('/api/v1/signup', { username: 'uliiapopova', password: 'qwerty1' }).then((response) => {
-                console.log(response.data); // => { token: ..., username: 'newuser' }
-            });
-        }
-        createUser();
-    }, []);
+    // useEffect(() => {
+    //     const createUser = async () => {
+    //         await axios.post('/api/v1/signup', { username: 'ramon04', password: 'qwerty' }).then((response) => {
+    //             console.log(response.data); // => { token: ..., username: 'newuser' }
+    //         });
+    //         await axios.post('/api/v1/signup', { username: 'uliiapopova', password: 'qwerty1' }).then((response) => {
+    //             console.log(response.data); // => { token: ..., username: 'newuser' }
+    //         });
+    //     }
+    //     createUser();
+    // }, []);
 
-    // Modals
+    // MODALS
+    const [dropDownId, setDropDownId] = useState(null);
+    // AddModal
     const [showAddModal, setAddShow] = useState(false);
-    const handleClose = () => setAddShow(false);
-    const handleShow = () => setAddShow(true);
+    const handleCloseAddModal = () => setAddShow(false);
+    const handleShowAddModal = () => setAddShow(true);
+
+    // RemoveModal
+    const [showRemoveModal, setRemove] = useState(false);
+    const handleCloseRemove = () => setRemove(false);
+    const handleShowRemoveModal = (id) => {
+        setRemove(true)
+        setDropDownId(id)
+    };
 
     // Store
     const { channels, currentChannelId } = useSelector(state => state.channels);
@@ -82,7 +93,7 @@ const MainPage = () => {
             // console.log(messages)
         };
         getData();
-    }, []);
+    }, [socket]);
 
     // SOCKET SUBSCRIPTION
 
@@ -105,7 +116,7 @@ const MainPage = () => {
         socket.on('removeChannel', (id) => {
             dispatch(removeChannel(id))
         })
-    });
+    }, [socket]);
 
     const renderChannels = () => {
         if (channels.length === 0) {
@@ -140,8 +151,11 @@ const MainPage = () => {
                         <Dropdown.Toggle split variant="outline-secondary" id="dropdown-split-basic" />
 
                         <Dropdown.Menu>
-                            <Dropdown.Item href="#/action-1">Переименовать</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">Удалить</Dropdown.Item>
+                            <Dropdown.Item>Переименовать</Dropdown.Item>
+                            <Dropdown.Item
+                                onClick={() => handleShowRemoveModal(id)}>
+                                Удалить
+                            </Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>
@@ -161,7 +175,13 @@ const MainPage = () => {
 
     return (
         <>
-            <AddModal show={showAddModal} handleClose={handleClose} />
+            <AddModal
+                show={showAddModal}
+                handleClose={handleCloseAddModal} />
+            <RemoveModal
+                show={showRemoveModal}
+                handleClose={handleCloseRemove}
+                channelId={dropDownId} />
             <Header />
             <Container className='h-100 my-4 overflow-hidden rounded shadow'>
                 <Row className='h-100 bg-white flex-md-row'>
@@ -169,7 +189,7 @@ const MainPage = () => {
                         <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
                             <span>Каналы</span>
                             <button type="button" className="p-0 text-primary btn btn-group-vertical">
-                                <Plus onClick={handleShow} />
+                                <Plus onClick={handleShowAddModal} />
                             </button>
                         </div>
                         <ul className="nav flex-column nav-pills nav-fill px-2">

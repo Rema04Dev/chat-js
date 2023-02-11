@@ -1,15 +1,12 @@
 import { Form, Button, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useSelector, useDispatch } from 'react-redux';
-import { addChannel } from '../../store/slices/channelsSlice';
+import { useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
-import { useEffect } from 'react';
 
 const socket = io.connect('http://localhost:3000')
 const AddModal = ({ show, handleClose }) => {
     const channels = useSelector(state => state.channels.channels)
-    const dispatch = useDispatch();
 
     const formik = useFormik({
         initialValues: {
@@ -26,7 +23,6 @@ const AddModal = ({ show, handleClose }) => {
         }),
 
         onSubmit: (values) => {
-            console.log(channels);
             socket.emit('newChannel', values);
         }
     })
