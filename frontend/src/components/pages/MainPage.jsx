@@ -5,7 +5,12 @@ import { io } from 'socket.io-client';
 import axios from 'axios';
 import routes from '../../utils/routes';
 import AuthContext from '../../contexts/AuthContext';
-import { channelsFethced, setCurrentChannelId, addChannel } from '../../store/slices/channelsSlice';
+import {
+    channelsFethced,
+    setCurrentChannelId,
+    addChannel,
+    removeChannel
+} from '../../store/slices/channelsSlice';
 import { messagesFetched, addMessage } from '../../store/slices/messagesSlice';
 
 import {
@@ -34,11 +39,6 @@ const MainPage = () => {
         createUser();
     }, []);
 
-    useEffect(() => {
-        socket.on('newChannel', (channel) => {
-            dispatch(addChannel(channel))
-        });
-    }, [socket]);
     // Modals
     const [showAddModal, setAddShow] = useState(false);
     const handleClose = () => setAddShow(false);
@@ -84,11 +84,28 @@ const MainPage = () => {
         getData();
     }, []);
 
+    // SOCKET SUBSCRIPTION
+
+    // subscribe new messages
     useEffect(() => {
         socket.on('newMessage', (data) => {
             dispatch(addMessage(data));
         })
     }, [socket]);
+
+    // subscribe new channel
+    useEffect(() => {
+        socket.on('newChannel', (channel) => {
+            dispatch(addChannel(channel))
+        });
+    }, [socket]);
+
+    // subscribe remove channel
+    useEffect(() => {
+        socket.on('removeChannel', (id) => {
+            dispatch(removeChannel(id))
+        })
+    });
 
     const renderChannels = () => {
         if (channels.length === 0) {
