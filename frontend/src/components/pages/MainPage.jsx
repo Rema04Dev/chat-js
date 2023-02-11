@@ -5,10 +5,14 @@ import { io } from 'socket.io-client';
 import axios from 'axios';
 import routes from '../../utils/routes';
 import AuthContext from '../../contexts/AuthContext';
-import { channelsFethced, setCurrentChannelId } from '../../store/slices/channelsSlice';
+import { channelsFethced, setCurrentChannelId, addChannel } from '../../store/slices/channelsSlice';
 import { messagesFetched, addMessage } from '../../store/slices/messagesSlice';
 
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import {
+    Container, Row, Col,
+    Form,
+    ButtonGroup, Button, Dropdown,
+} from 'react-bootstrap';
 import { Plus, ArrowRight } from 'react-bootstrap-icons';
 import Header from '../Header';
 import AddModal from '../modals/AddModal';
@@ -29,15 +33,27 @@ const MainPage = () => {
         }
         createUser();
     }, []);
-    const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    useEffect(() => {
+        socket.on('newChannel', (channel) => {
+            dispatch(addChannel(channel))
+        });
+    }, [socket]);
+    // Modals
+    const [showAddModal, setAddShow] = useState(false);
+    const handleClose = () => setAddShow(false);
+    const handleShow = () => setAddShow(true);
+
+    // Store
     const { channels, currentChannelId } = useSelector(state => state.channels);
     const messages = useSelector(state => state.messages.messages);
     const dispatch = useDispatch();
+
+    // AuthContext
     const { user } = useContext(AuthContext);
     const { username, token } = user;
+
+    // Chat Form
     const [message, setMessage] = useState('');
     const handleChange = ({ target: { value } }) => setMessage(value);
     const handleSubmit = (evt) => {
@@ -55,11 +71,6 @@ const MainPage = () => {
     }
 
     useEffect(() => {
-        socket.on('newMessage', (data) => {
-            dispatch(addMessage(data));
-        })
-    }, [socket])
-    useEffect(() => {
         const getData = async () => {
             const response = await axios.get(routes.dataPath(), {
                 headers: { 'Authorization': `Bearer ${token}` }
@@ -67,28 +78,56 @@ const MainPage = () => {
             const data = await response.data;
             dispatch(channelsFethced(data.channels))
             dispatch(messagesFetched(data.messages))
-            console.log(channels);
+            // console.log(channels);
             // console.log(messages)
         };
         getData();
     }, []);
 
+    useEffect(() => {
+        socket.on('newMessage', (data) => {
+            dispatch(addMessage(data));
+        })
+    }, [socket]);
+
     const renderChannels = () => {
         if (channels.length === 0) {
             return <span>Каналов нет</span>
         }
-        return channels.map(({ id, name }) => {
+        return channels.map(({ id, name, removable }) => {
             const channelCSS = cn('btn', {
                 'btn-secondary': id === currentChannelId,
                 'btn-outline-secondary': id !== currentChannelId
             })
+            if (!removable) {
+                return <li key={id} className="nav-item w-100">
+                    <button
+                        onClick={() => dispatch(setCurrentChannelId(id))}
+                        type="button"
+                        className={`w-100 text-start rounded-0 ${channelCSS}`}>
+                        <span className="me-1">#</span>{name}
+                    </button>
+                </li>
+            }
             return <li key={id} className="nav-item w-100">
-                <button
-                    onClick={() => dispatch(setCurrentChannelId(id))}
-                    type="button"
-                    className={`w-100 text-start rounded-0 ${channelCSS}`}>
-                    <span className="me-1">#</span>{name}
-                </button>
+                <div role="group" className="d-flex dropdown btn-group">
+                    <Dropdown as={ButtonGroup} className="w-100">
+                        <Button
+                            onClick={() => dispatch(setCurrentChannelId(id))}
+                            type="button"
+                            variant="outline-secondary"
+                            className={`w-100 text-start rounded-0 ${channelCSS}`}>
+                            <span className="me-1">#</span>{name}
+                        </Button>
+
+                        <Dropdown.Toggle split variant="outline-secondary" id="dropdown-split-basic" />
+
+                        <Dropdown.Menu>
+                            <Dropdown.Item href="#/action-1">Переименовать</Dropdown.Item>
+                            <Dropdown.Item href="#/action-2">Удалить</Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </div>
             </li>
         })
     }
@@ -105,7 +144,7 @@ const MainPage = () => {
 
     return (
         <>
-            <AddModal show={show} handleClose={handleClose} />
+            <AddModal show={showAddModal} handleClose={handleClose} />
             <Header />
             <Container className='h-100 my-4 overflow-hidden rounded shadow'>
                 <Row className='h-100 bg-white flex-md-row'>

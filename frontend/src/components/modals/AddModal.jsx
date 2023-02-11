@@ -31,12 +31,6 @@ const AddModal = ({ show, handleClose }) => {
         }
     })
 
-    useEffect(() => {
-        socket.on('newChannel', (channel) => {
-            dispatch(addChannel(channel))
-        });
-    }, [socket]);
-
     return (
         <>
             <Modal show={show} onHide={handleClose}>
