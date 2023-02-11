@@ -11,32 +11,54 @@ import { messagesFetched, addMessage } from '../../store/slices/messagesSlice';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
 import { Plus, ArrowRight } from 'react-bootstrap-icons';
 import Header from '../Header';
-
+import AddModal from '../modals/AddModal';
 const formatMessage = (text) => text.trim();
+const socket = io.connect('http://localhost:3000')
+// const socket = io.connect('http://localhost:5001')
+
+
 const MainPage = () => {
+    useEffect(() => {
+        const createUser = async () => {
+            await axios.post('/api/v1/signup', { username: 'ramon04', password: 'qwerty' }).then((response) => {
+                console.log(response.data); // => { token: ..., username: 'newuser' }
+            });
+            await axios.post('/api/v1/signup', { username: 'uliiapopova', password: 'qwerty1' }).then((response) => {
+                console.log(response.data); // => { token: ..., username: 'newuser' }
+            });
+        }
+        createUser();
+    }, []);
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     const { channels, currentChannelId } = useSelector(state => state.channels);
     const messages = useSelector(state => state.messages.messages);
     const dispatch = useDispatch();
     const { user } = useContext(AuthContext);
     const { username, token } = user;
     const [message, setMessage] = useState('');
-    const socket = io();
     const handleChange = ({ target: { value } }) => setMessage(value);
-    const handleSubmit = async (evt) => {
+    const handleSubmit = (evt) => {
         evt.preventDefault();
         const formattedMessage = {
             body: formatMessage(message),
-            channelId: 1,
+            channelId: currentChannelId,
             username: username
         }
-        if (formattedMessage.length === 0) {
-            return false;
-        }
-        await socket.emit('newMessage', { ...formattedMessage });
-        dispatch(addMessage(formattedMessage));
+        if (!formattedMessage.body) return false;
+
+        socket.emit('newMessage', formattedMessage);
+        // dispatch(addMessage(formattedMessage));
         setMessage('');
     }
 
+    useEffect(() => {
+        socket.on('newMessage', (data) => {
+            dispatch(addMessage(data));
+        })
+    }, [socket])
     useEffect(() => {
         const getData = async () => {
             const response = await axios.get(routes.dataPath(), {
@@ -45,8 +67,9 @@ const MainPage = () => {
             const data = await response.data;
             dispatch(channelsFethced(data.channels))
             dispatch(messagesFetched(data.messages))
+            console.log(channels);
+            // console.log(messages)
         };
-
         getData();
     }, []);
 
@@ -79,8 +102,10 @@ const MainPage = () => {
             return <div key={id} className="text-break mb-2"><b>{username}</b>: {body}</div>
         })
     }
+
     return (
         <>
+            <AddModal show={show} handleClose={handleClose} />
             <Header />
             <Container className='h-100 my-4 overflow-hidden rounded shadow'>
                 <Row className='h-100 bg-white flex-md-row'>
@@ -88,7 +113,7 @@ const MainPage = () => {
                         <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
                             <span>Каналы</span>
                             <button type="button" className="p-0 text-primary btn btn-group-vertical">
-                                <Plus />
+                                <Plus onClick={handleShow} />
                             </button>
                         </div>
                         <ul className="nav flex-column nav-pills nav-fill px-2">
@@ -117,7 +142,8 @@ const MainPage = () => {
                                             aria-label='Новое сообщение'
                                             className='border-0 p-0 ps-2 form-control'
                                             name='body'
-                                            placeholder='Введите сообщение...' />
+                                            placeholder='Введите сообщение...'
+                                            autoComplete='off' />
                                         <button type="submit" disabled="" className="btn btn-group-vertical">
                                             <ArrowRight />
                                             <span className="visually-hidden">Отправить</span>

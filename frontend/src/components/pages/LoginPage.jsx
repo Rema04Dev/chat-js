@@ -29,16 +29,17 @@ const LoginPage = () => {
         },
         onSubmit: async (values) => {
             const userData = {
-                username: values.username,
-                password: values.password
+                username: values.username, // admin
+                password: values.password // admin
             }
             try {
-                const response = await axios.post(routes.loginPath(), { ...userData })
-                if (response.statusText !== 'OK') {
-                    const status = await response.data.error;
-                    throw new Error(status);
-                }
-                logIn({ ...response.data })
+                // api/vi/login
+                const response = await axios.post(routes.loginPath(), userData) // username: admin, password: admin === 
+                // if (response.statusText !== 'OK') {
+                //     const status = await response.data.error;
+                //     throw new Error(status);
+                // }
+                logIn({ ...response.data }) // username: admin, token: d7s7d7sd7s7d7s7d7sd77dyshd7s
                 navigate('/');
             } catch (e) {
                 const message = e.response.statusText === 'Unauthorized' ? 'Неверный логин или пароль' : 'Неизвестная ошибка'

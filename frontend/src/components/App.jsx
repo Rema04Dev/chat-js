@@ -15,6 +15,7 @@ const App = () => {
         localStorage.removeItem('user');
         setUser(null);
     }, []);
+
     return (
         <>
             <AuthContext.Provider value={{ user, logIn, logOut }}>
