@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useState, useContext } from 'react';
 import AuthContext from '../../contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
+import ErrorMessage from '../ErrorMessage';
 const SignUpPage = () => {
     const { t } = useTranslation();
 
@@ -72,9 +73,10 @@ const SignUpPage = () => {
                                 placeholder={`${t('signup.username')}`}
                                 className={`${formik.errors.username && formik.touched.username ? 'is-invalid' : ''}`} />
                             <Form.Label htmlFor='floatingLogin'>{t('signup.username')}</Form.Label>
-                            <Form.Text className="text-danger">
-                                {formik.errors.username && formik.touched.username ? formik.errors.username : null}
-                            </Form.Text>
+                            {
+                                formik.errors.username && formik.touched.username
+                                && <ErrorMessage message={formik.errors.username} />
+                            }
                         </Form.Group>
                         <Form.Group className="mb-3 form-floating">
                             <Form.Control

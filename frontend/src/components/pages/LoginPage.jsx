@@ -7,6 +7,7 @@ import AuthContext from '../../contexts/AuthContext';
 import * as Yup from 'yup';
 import axios from 'axios';
 import routes from '../../utils/routes'
+import ErrorMessage from '../ErrorMessage';
 
 const INPUT_LENGTHS = {
     username: 3,
@@ -74,9 +75,12 @@ const LoginPage = () => {
                                     autoComplete='off'
                                     className={formik.errors.username && formik.touched.username ? 'is-invalid' : ''} />
                                 <Form.Label htmlFor='floatingLogin'>Ваш логин</Form.Label>
-                                <Form.Text className="text-danger">
-                                    {formik.errors.username && formik.touched.username ? formik.errors.username : null}
-                                </Form.Text>
+                                {
+                                    formik.errors.username
+                                    && formik.touched.username
+                                    && <ErrorMessage message={formik.errors.username} />
+                                }
+
                             </Form.Group>
                             <Form.Group className="mb-3 form-floating">
                                 <Form.Control
@@ -90,11 +94,13 @@ const LoginPage = () => {
                                     className={formik.errors.password && formik.touched.password ? 'is-invalid' : ''} />
                                 <Form.Label htmlFor='floatingPassword'>Ваш пароль</Form.Label>
                                 <Form.Text className="text-danger">
-                                    {formik.errors.password && formik.touched.password ? formik.errors.password : null}
+                                    {
+                                        formik.errors.password
+                                        && formik.touched.password
+                                        && <ErrorMessage message={formik.errors.password} />
+                                    }
                                 </Form.Text>
-                                <Form.Text className="text-danger">
-                                    {errorMessage}
-                                </Form.Text>
+                                <ErrorMessage message={errorMessage} />
                             </Form.Group>
                             <Button variant="primary" type="submit">
                                 Войти
