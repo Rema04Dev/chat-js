@@ -23,6 +23,9 @@ const ru = {
         },
         renameModal: {
             success: 'Канал переименован'
+        },
+        removeModal: {
+            success: 'Канал удалён'
         }
     }
 };

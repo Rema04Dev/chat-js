@@ -1,11 +1,16 @@
 import { Button, Modal } from 'react-bootstrap';
 import { io } from 'socket.io-client';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 const socket = io.connect('http://localhost:3000');
 const RemoveModal = ({ show, handleClose, channelId }) => {
+    const { t } = useTranslation();
+    const notify = () => toast.success(t('removeModal.success'))
     const handleRemove = () => {
         socket.emit('removeChannel', ({ id: channelId }))
         handleClose();
+        notify();
     }
     return (
         <>
