@@ -1,5 +1,3 @@
 import ru from './ru';
 
-export default {
-  ru,
-};
+export default { ru };
