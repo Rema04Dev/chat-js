@@ -59,7 +59,7 @@ const LoginPage = () => {
         <>
             <Container>
                 <Row>
-                    <Col className='col-6'>
+                    <Col className='col-9 m-auto mt-5'>
                         <h1 className='text-center'>Войти</h1>
                         <Form
                             onSubmit={formik.handleSubmit}>
@@ -71,6 +71,7 @@ const LoginPage = () => {
                                     id="floatingLogin"
                                     name="username"
                                     placeholder="Введите логин"
+                                    autoComplete='off'
                                     className={formik.errors.username && formik.touched.username ? 'is-invalid' : ''} />
                                 <Form.Label htmlFor='floatingLogin'>Ваш логин</Form.Label>
                                 <Form.Text className="text-danger">
@@ -84,6 +85,7 @@ const LoginPage = () => {
                                     type="password"
                                     id="floatingPassword"
                                     name="password"
+                                    autoComplete='off'
                                     placeholder="Введите пароль"
                                     className={formik.errors.password && formik.touched.password ? 'is-invalid' : ''} />
                                 <Form.Label htmlFor='floatingPassword'>Ваш пароль</Form.Label>
@@ -98,7 +100,7 @@ const LoginPage = () => {
                                 Войти
                             </Button>
                         </Form>
-                        <p>Нет аккаунта? <Link to="/signup">Регистрация</Link></p>
+                        <p className='mt-3'>Нет аккаунта? <Link to="/signup">Регистрация</Link></p>
                     </Col>
                 </Row>
             </Container>
