@@ -3,13 +3,8 @@ import { io } from 'socket.io-client';
 
 const socket = io.connect('http://localhost:3000');
 const RemoveModal = ({ show, handleClose, channelId }) => {
-
-    const onRemoveChannel = () => {
-        socket.emit('removeChannel', ({ id: channelId }))
-    }
-
     const handleRemove = () => {
-        onRemoveChannel();
+        socket.emit('removeChannel', ({ id: channelId }))
         handleClose();
     }
     return (
@@ -24,7 +19,7 @@ const RemoveModal = ({ show, handleClose, channelId }) => {
                         <Button variant="secondary" onClick={handleClose}>
                             Отменить
                         </Button>
-                        <Button variant="danger" onClick={() => handleRemove()}>
+                        <Button variant="danger" onClick={handleRemove}>
                             Удалить
                         </Button>
                     </div>
