@@ -9,7 +9,8 @@ import {
     channelsFethced,
     setCurrentChannelId,
     addChannel,
-    removeChannel
+    removeChannel,
+    renameChannel
 } from '../../store/slices/channelsSlice';
 import { messagesFetched, addMessage } from '../../store/slices/messagesSlice';
 
@@ -22,10 +23,10 @@ import { Plus, ArrowRight } from 'react-bootstrap-icons';
 import Header from '../Header';
 import AddModal from '../modals/AddModal';
 import RemoveModal from '../modals/RemoveModal';
+import RenameModal from '../modals/RenameModal';
+
 const formatMessage = (text) => text.trim();
 const socket = io.connect('http://localhost:3000')
-// const socket = io.connect('http://localhost:5001')
-
 
 const MainPage = () => {
     // useEffect(() => {
@@ -42,6 +43,7 @@ const MainPage = () => {
 
     // MODALS
     const [dropDownId, setDropDownId] = useState(null);
+    const [renameId, setRenameId] = useState(null);
     // AddModal
     const [showAddModal, setAddShow] = useState(false);
     const handleCloseAddModal = () => setAddShow(false);
@@ -55,6 +57,13 @@ const MainPage = () => {
         setDropDownId(id)
     };
 
+    // RenameModal
+    const [showRenameModal, setRename] = useState(false);
+    const handleCloseRenameModal = () => setRename(false);
+    const handleShowRenameModal = (id) => {
+        setRename(true);
+        setRenameId(id);
+    }
     // Store
     const { channels, currentChannelId } = useSelector(state => state.channels);
     const messages = useSelector(state => state.messages.messages);
@@ -118,6 +127,13 @@ const MainPage = () => {
         })
     }, [socket]);
 
+    // subscribe rename channel
+    useEffect(() => {
+        socket.on('renameChannel', (channel) => {
+            dispatch(renameChannel(channel))
+        })
+    }, [socket]);
+
     const renderChannels = () => {
         if (channels.length === 0) {
             return <span>Каналов нет</span>
@@ -151,7 +167,10 @@ const MainPage = () => {
                         <Dropdown.Toggle split variant="outline-secondary" id="dropdown-split-basic" />
 
                         <Dropdown.Menu>
-                            <Dropdown.Item>Переименовать</Dropdown.Item>
+                            <Dropdown.Item
+                                onClick={() => handleShowRenameModal(id)}>
+                                Переименовать
+                            </Dropdown.Item>
                             <Dropdown.Item
                                 onClick={() => handleShowRemoveModal(id)}>
                                 Удалить
@@ -182,6 +201,10 @@ const MainPage = () => {
                 show={showRemoveModal}
                 handleClose={handleCloseRemove}
                 channelId={dropDownId} />
+            <RenameModal
+                show={showRenameModal}
+                handleClose={handleCloseRenameModal}
+                channelId={renameId} />
             <Header />
             <Container className='h-100 my-4 overflow-hidden rounded shadow'>
                 <Row className='h-100 bg-white flex-md-row'>

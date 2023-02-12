@@ -5,12 +5,12 @@ import { useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
 
 const socket = io.connect('http://localhost:3000')
-const AddModal = ({ show, handleClose }) => {
+const RenameModal = ({ show, handleClose, channelId }) => {
     const channels = useSelector(state => state.channels.channels)
 
     const formik = useFormik({
         initialValues: {
-            name: '',
+            name: ''
         },
 
         validationSchema: Yup.object({
@@ -23,7 +23,7 @@ const AddModal = ({ show, handleClose }) => {
         }),
 
         onSubmit: (values) => {
-            socket.emit('newChannel', values);
+            socket.emit('renameChannel', { id: channelId, ...values });
             handleClose();
         }
     })
@@ -32,7 +32,7 @@ const AddModal = ({ show, handleClose }) => {
         <>
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Добавить канал</Modal.Title>
+                    <Modal.Title>Переименовать канал</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={formik.handleSubmit}>
@@ -64,4 +64,4 @@ const AddModal = ({ show, handleClose }) => {
     );
 }
 
-export default AddModal;
+export default RenameModal
