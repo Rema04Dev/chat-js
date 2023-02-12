@@ -27,7 +27,6 @@ import RenameModal from '../modals/RenameModal';
 
 import { ToastContainer } from 'react-toastify';
 
-
 const formatMessage = (text) => text.trim();
 const socket = io.connect('http://localhost:3000')
 
