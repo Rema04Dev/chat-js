@@ -98,7 +98,7 @@ const LoginPage = () => {
                                 Войти
                             </Button>
                         </Form>
-                        <p>Нет аккаунта? <Link to="/sign-up">Регистрация</Link></p>
+                        <p>Нет аккаунта? <Link to="/signup">Регистрация</Link></p>
                     </Col>
                 </Row>
             </Container>
