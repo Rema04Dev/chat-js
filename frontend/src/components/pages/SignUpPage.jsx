@@ -1,9 +1,17 @@
 import { Form, Button, Container } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import routes from '../../utils/routes';
+import axios from 'axios';
+import { useState, useContext } from 'react';
+import AuthContext from '../../contexts/AuthContext';
 
 const SignUpPage = () => {
+    const [errorMessage, setErrorMessage] = useState(null);
+    const navigate = useNavigate();
+    const { logIn } = useContext(AuthContext);
+
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -25,8 +33,26 @@ const SignUpPage = () => {
                 .oneOf([Yup.ref('password'), null], 'Пароли должны совпадать')
         }),
 
-        onSubmit: (values) => {
-            console.log(values)
+        onSubmit: async (values) => {
+            const userData = {
+                username: values.username,
+                password: values.password
+            }
+
+            try {
+                const response = await axios.post(routes.signupPath(), userData)
+                console.log(response.data);
+                logIn({ ...response.data })
+                navigate('/')
+                if (response.response.status === 409) {
+                    throw new Error('already exists')
+                }
+            } catch (e) {
+                const status = e.response.status
+                const message = status === 409 ? 'Такой пользователь уже существует' : 'Неизвестная ошибка'
+                setErrorMessage(message);
+                throw e;
+            }
         }
     })
     return (
@@ -73,6 +99,9 @@ const SignUpPage = () => {
                     <Form.Label htmlFor='floatingConfirmPassword'>Подтвердите пароль</Form.Label>
                     <Form.Text className="text-danger">
                         {formik.errors.confirmPassword && formik.touched.confirmPassword ? formik.errors.confirmPassword : null}
+                    </Form.Text>
+                    <Form.Text className="text-danger">
+                        {errorMessage}
                     </Form.Text>
                 </Form.Group>
                 <Button variant="primary" type="submit">
