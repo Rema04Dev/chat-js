@@ -3,10 +3,14 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next'
 
 const socket = io.connect('http://localhost:3000')
 const RenameModal = ({ show, handleClose, channelId }) => {
     const channels = useSelector(state => state.channels.channels)
+    const { t } = useTranslation();
+    const notify = () => toast.success(t('renameModal.success'));
 
     const formik = useFormik({
         initialValues: {
@@ -25,6 +29,7 @@ const RenameModal = ({ show, handleClose, channelId }) => {
         onSubmit: (values) => {
             socket.emit('renameChannel', { id: channelId, ...values });
             handleClose();
+            notify();
         }
     })
 
@@ -43,6 +48,7 @@ const RenameModal = ({ show, handleClose, channelId }) => {
                                 name="name"
                                 type="text"
                                 autoFocus
+                                autoComplete='off'
                             />
                             {
                                 formik.errors.name &&

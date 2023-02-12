@@ -25,22 +25,13 @@ import AddModal from '../modals/AddModal';
 import RemoveModal from '../modals/RemoveModal';
 import RenameModal from '../modals/RenameModal';
 
+import { ToastContainer } from 'react-toastify';
+
+
 const formatMessage = (text) => text.trim();
 const socket = io.connect('http://localhost:3000')
 
 const MainPage = () => {
-    // useEffect(() => {
-    //     const createUser = async () => {
-    //         await axios.post('/api/v1/signup', { username: 'ramon04', password: 'qwerty' }).then((response) => {
-    //             console.log(response.data); // => { token: ..., username: 'newuser' }
-    //         });
-    //         await axios.post('/api/v1/signup', { username: 'uliiapopova', password: 'qwerty1' }).then((response) => {
-    //             console.log(response.data); // => { token: ..., username: 'newuser' }
-    //         });
-    //     }
-    //     createUser();
-    // }, []);
-
     // MODALS
     const [dropDownId, setDropDownId] = useState(null);
     const [renameId, setRenameId] = useState(null);
@@ -254,7 +245,18 @@ const MainPage = () => {
                     </Col>
                 </Row>
             </Container>
-
+            <ToastContainer
+                position="bottom-left"
+                autoClose={1500}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable
+                pauseOnHover={false}
+                theme="dark"
+            />
         </>
     )
 }

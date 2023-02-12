@@ -18,6 +18,12 @@ const ru = {
         login: {
             title: 'Войти'
         },
+        addModal: {
+            success: 'Канал создан'
+        },
+        renameModal: {
+            success: 'Канал переименован'
+        }
     }
 };
 
