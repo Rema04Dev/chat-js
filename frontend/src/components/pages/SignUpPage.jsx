@@ -115,7 +115,7 @@ const SignUpPage = () => {
                             {t('signup.submit')}
                         </Button>
                     </Form>
-                    <p className='mt-3'>{t('signup.validation.hasAccount')}<Link to="/login">{t('login.title')}</Link></p>
+                    <p className='mt-3'>{t('signup.hasAccount')} <Link to="/login">{t('login.title')}</Link></p>
                 </Col>
             </Row>
         </Container>

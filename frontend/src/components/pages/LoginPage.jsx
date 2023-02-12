@@ -8,20 +8,13 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import routes from '../../utils/routes'
 import ErrorMessage from '../ErrorMessage';
-
-const INPUT_LENGTHS = {
-    username: 3,
-    password: 4,
-}
-const ERRORS_MESSAGES = {
-    usernameMinLength: `Имя должно содержать минимум ${INPUT_LENGTHS.username}`,
-    passwordMinLength: `Пароль должен содержать минимум ${INPUT_LENGTHS.password}`
-}
+import { useTranslation } from 'react-i18next';
 
 const LoginPage = () => {
     const [errorMessage, setErrorMessage] = useState(null);
     const navigate = useNavigate();
     const { logIn } = useContext(AuthContext);
+    const { t } = useTranslation();
 
     const formik = useFormik({
         initialValues: {
@@ -38,7 +31,7 @@ const LoginPage = () => {
                 logIn({ ...response.data })
                 navigate('/');
             } catch (e) {
-                const message = e.response.statusText === 'Unauthorized' ? 'Неверный логин или пароль' : 'Неизвестная ошибка'
+                const message = e.response.statusText === 'Unauthorized' ? t('login.validation.failed') : 'Неизвестная ошибка'
                 setErrorMessage(message)
                 throw e;
             }
@@ -47,12 +40,10 @@ const LoginPage = () => {
         validationSchema: Yup.object({
             username: Yup
                 .string()
-                .min(INPUT_LENGTHS.username, ERRORS_MESSAGES.usernameMinLength)
-                .required('Обязательное поле'),
+                .required(t('login.validation.required')),
             password: Yup
                 .string()
-                .min(INPUT_LENGTHS.password, ERRORS_MESSAGES.passwordMinLength)
-                .required('Обязательное поле')
+                .required(t('login.validation.required')),
         })
     })
 
@@ -61,7 +52,7 @@ const LoginPage = () => {
             <Container>
                 <Row>
                     <Col className='col-9 m-auto mt-5'>
-                        <h1 className='text-center'>Войти</h1>
+                        <h1 className='text-center'>{t('login.title')}</h1>
                         <Form
                             onSubmit={formik.handleSubmit}>
                             <Form.Group className="mb-3 form-floating">
@@ -71,10 +62,10 @@ const LoginPage = () => {
                                     type="text"
                                     id="floatingLogin"
                                     name="username"
-                                    placeholder="Введите логин"
+                                    placeholder={t('login.username')}
                                     autoComplete='off'
                                     className={formik.errors.username && formik.touched.username ? 'is-invalid' : ''} />
-                                <Form.Label htmlFor='floatingLogin'>Ваш логин</Form.Label>
+                                <Form.Label htmlFor='floatingLogin'>{t('login.username')}</Form.Label>
                                 {
                                     formik.errors.username
                                     && formik.touched.username
@@ -90,9 +81,9 @@ const LoginPage = () => {
                                     id="floatingPassword"
                                     name="password"
                                     autoComplete='off'
-                                    placeholder="Введите пароль"
+                                    placeholder={t('login.password')}
                                     className={formik.errors.password && formik.touched.password ? 'is-invalid' : ''} />
-                                <Form.Label htmlFor='floatingPassword'>Ваш пароль</Form.Label>
+                                <Form.Label htmlFor='floatingPassword'>{t('login.password')}</Form.Label>
                                 <Form.Text className="text-danger">
                                     {
                                         formik.errors.password
@@ -102,11 +93,9 @@ const LoginPage = () => {
                                 </Form.Text>
                                 <ErrorMessage message={errorMessage} />
                             </Form.Group>
-                            <Button variant="primary" type="submit">
-                                Войти
-                            </Button>
+                            <Button variant="primary" type="submit">{t('login.submit')}</Button>
                         </Form>
-                        <p className='mt-3'>Нет аккаунта? <Link to="/signup">Регистрация</Link></p>
+                        <p className='mt-3'>{t('login.hasAccount')} <Link to="/signup">{t('signup.title')}</Link></p>
                     </Col>
                 </Row>
             </Container>

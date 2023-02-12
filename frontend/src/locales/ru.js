@@ -6,17 +6,25 @@ const ru = {
             password: 'Пароль',
             confirmPassword: 'Подтвердите пароль',
             submit: 'Зарегистрироваться',
+            hasAccount: 'Уже зарегистрированы?',
             validation: {
                 usernameLength: 'От 3 до 20 символов',
                 passwordLength: 'Не менее 6 символов',
                 required: 'Обязательное поле',
                 mustMatch: 'Пароли должны совпадать',
                 alreadyExists: 'Такой пользователь уже существует',
-                hasAccount: 'Уже зарегистрированы?',
             }
         },
         login: {
-            title: 'Войти'
+            title: 'Войти',
+            username: 'Ваш ник',
+            password: 'Пароль',
+            submit: 'Войти',
+            hasAccount: 'Нет аккаунта?',
+            validation: {
+                failed: 'Неверные имя пользователя или пароль',
+                required: 'Обязательное поле',
+            }
         },
         addModal: {
             success: 'Канал создан'
