@@ -15,3 +15,6 @@ deploy:
 
 start:
 	make start-backend & make start-frontend
+
+refresh:
+	npm i @hexlet/chat-server & make start
