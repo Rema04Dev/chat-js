@@ -26,6 +26,11 @@ const ru = {
                 required: 'Обязательное поле',
             }
         },
+        channels: {
+            title: 'Каналы',
+            remove: 'Удалить',
+            rename: 'Переименовать'
+        },
         addModal: {
             success: 'Канал создан'
         },
