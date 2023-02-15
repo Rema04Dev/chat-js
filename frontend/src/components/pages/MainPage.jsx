@@ -61,7 +61,7 @@ const MainPage = () => {
 
     // AuthContext
     const { user, getAuthHeaders } = useContext(AuthContext);
-    const { username, token } = user;
+    const { username } = user;
 
     // Chat Form
     const [message, setMessage] = useState('');
@@ -83,7 +83,6 @@ const MainPage = () => {
         const getData = async () => {
             const headers = getAuthHeaders()
             await dispatch(fetchData(headers))
-            console.log(channels)
         }
         getData()
     }, [dispatch]);
