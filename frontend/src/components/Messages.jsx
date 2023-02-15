@@ -11,10 +11,16 @@ const formatMessage = (text) => text.trim();
 
 const Messages = () => {
     const { user } = useContext(AuthContext);
-    const { currentChannelId } = useSelector(state => state.channels)
-
+    const { channels, currentChannelId } = useSelector(state => state.channels)
     const [message, setMessage] = useState('');
     const messages = useSelector(state => state.messages.messages);
+
+    const currentMessages = [...messages]
+        .filter((message) => message.channelId === currentChannelId);
+    const currentChannel = [...channels]
+        .find((channel) => channel.id === currentChannelId);
+
+    console.log(currentMessages);
     const dispatch = useDispatch();
     const handleChange = ({ target: { value } }) => setMessage(value);
     const handleSubmit = (evt) => {
@@ -31,7 +37,7 @@ const Messages = () => {
     }
 
     const renderMessages = () => {
-        return messages.map(({ id, body, username }) => {
+        return currentMessages.map(({ id, body, username }) => {
             return <div key={id} className="text-break mb-2"><b>{username}</b>: {body}</div>
         })
     }
@@ -46,7 +52,7 @@ const Messages = () => {
     return (
         <Col className='p-0 h-100"'>
             <div className="d-flex flex-column h-100">
-                <MessagesHeader />
+                <MessagesHeader count={currentMessages.length} channelName={currentChannel.name} />
                 <div id="messages-box" className="chat-messages overflow-auto px-5" style={{ minHeight: '60vh' }}>
                     {renderMessages()}
                 </div>
