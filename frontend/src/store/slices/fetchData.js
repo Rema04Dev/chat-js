@@ -1,9 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios';
 import routes from '../../utils/routes';
+
 const fetchData = createAsyncThunk(
     'channels/fetchData',
-    async (headers, { dispatch }) => {
+    async (headers) => {
         console.log(headers)
         const response = await axios.get(routes.dataPath(), headers)
         const data = response.data;
