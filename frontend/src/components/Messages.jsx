@@ -1,12 +1,11 @@
 import { Col, Form } from 'react-bootstrap';
 import { ArrowRight } from 'react-bootstrap-icons';
-import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect, useContext } from 'react'
 import AuthContext from '../contexts/AuthContext';
 import { io } from 'socket.io-client';
 import { addMessage } from '../store/slices/messagesSlice';
-
+import MessagesHeader from './MessagesHeader';
 const socket = io.connect('http://localhost:3000')
 const formatMessage = (text) => text.trim();
 
@@ -32,15 +31,11 @@ const Messages = () => {
     }
 
     const renderMessages = () => {
-        if (messages.length === 0) {
-            return <span>Сообщений пока нет</span>
-        }
-
         return messages.map(({ id, body, username }) => {
             return <div key={id} className="text-break mb-2"><b>{username}</b>: {body}</div>
         })
     }
-    // subscribe new messages
+
     useEffect(() => {
         socket.on('newMessage', (data) => {
             dispatch(addMessage(data));
@@ -50,12 +45,8 @@ const Messages = () => {
 
     return (
         <Col className='p-0 h-100"'>
-            <div className="d-flex flex-column h-100"><div className="bg-light mb-4 p-3 shadow-sm small">
-                <p className="m-0">
-                    <b># random</b>
-                </p>
-                <span className="text-muted">{messages.length} сообщение</span>
-            </div>
+            <div className="d-flex flex-column h-100">
+                <MessagesHeader />
                 <div id="messages-box" className="chat-messages overflow-auto px-5" style={{ minHeight: '60vh' }}>
                     {renderMessages()}
                 </div>
