@@ -24,7 +24,7 @@ import Header from '../Header';
 import AddModal from '../modals/AddModal';
 import RemoveModal from '../modals/RemoveModal';
 import RenameModal from '../modals/RenameModal';
-
+import fetchData from '../../store/slices/fetchData';
 import { ToastContainer } from 'react-toastify';
 
 const formatMessage = (text) => text.trim();
@@ -55,12 +55,12 @@ const MainPage = () => {
         setRenameId(id);
     }
     // Store
-    const { channels, currentChannelId } = useSelector(state => state.channels);
+    const { channels, currentChannelId } = useSelector(state => state.channels)
     const messages = useSelector(state => state.messages.messages);
     const dispatch = useDispatch();
 
     // AuthContext
-    const { user } = useContext(AuthContext);
+    const { user, getAuthHeaders } = useContext(AuthContext);
     const { username, token } = user;
 
     // Chat Form
@@ -76,23 +76,17 @@ const MainPage = () => {
         if (!formattedMessage.body) return false;
 
         socket.emit('newMessage', formattedMessage);
-        // dispatch(addMessage(formattedMessage));
         setMessage('');
     }
 
     useEffect(() => {
         const getData = async () => {
-            const response = await axios.get(routes.dataPath(), {
-                headers: { 'Authorization': `Bearer ${token}` }
-            })
-            const data = await response.data;
-            dispatch(channelsFethced(data.channels))
-            dispatch(messagesFetched(data.messages))
-            // console.log(channels);
-            // console.log(messages)
-        };
-        getData();
-    }, [socket]);
+            const headers = getAuthHeaders()
+            await dispatch(fetchData(headers))
+            console.log(channels)
+        }
+        getData()
+    }, [dispatch]);
 
     // SOCKET SUBSCRIPTION
 
@@ -184,7 +178,7 @@ const MainPage = () => {
 
     return (
         <>
-            <AddModal
+            {/* <AddModal
                 show={showAddModal}
                 handleClose={handleCloseAddModal} />
             <RemoveModal
@@ -194,7 +188,7 @@ const MainPage = () => {
             <RenameModal
                 show={showRenameModal}
                 handleClose={handleCloseRenameModal}
-                channelId={renameId} />
+                channelId={renameId} /> */}
             <Header />
             <Container className='h-100 my-4 overflow-hidden rounded shadow'>
                 <Row className='h-100 bg-white flex-md-row'>
