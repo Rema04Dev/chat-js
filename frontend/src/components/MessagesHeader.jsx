@@ -11,4 +11,4 @@ const MessagesHeader = ({ channelName, count }) => {
     )
 }
 
-export default MessagesHeader
+export default MessagesHeader;
