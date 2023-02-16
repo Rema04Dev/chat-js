@@ -1,15 +1,14 @@
-import { useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Container, Row } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
-import Header from '../Header';
-import Channels from '../Channels';
-import Messages from '../Messages';
-import AuthContext from '../../contexts/AuthContext';
+import ChatHeader from './blocks/ChatHeader.jsx';
+import Channels from './blocks/Channels';
+import Messages from './blocks/Messages';
 import fetchData from '../../store/slices/fetchData';
-
+import useAuth from '../../hooks/useAuth.hook.js';
 const MainPage = () => {
-    const { getAuthHeaders } = useContext(AuthContext);
+    const { getAuthHeaders } = useAuth();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -22,7 +21,7 @@ const MainPage = () => {
 
     return (
         <>
-            <Header />
+            <ChatHeader />
             <Container className='h-100 my-4 overflow-hidden rounded shadow'>
                 <Row className='h-100 bg-white flex-md-row'>
                     <Channels />

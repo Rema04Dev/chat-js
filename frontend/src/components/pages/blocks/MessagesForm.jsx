@@ -1,18 +1,14 @@
-import { useContext } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ArrowRight } from 'react-bootstrap-icons';
-import AuthContext from '../contexts/AuthContext';
-import SocketContext from '../contexts/SocketContext';
-import { addMessage } from '../store/slices/messagesSlice';
+import useAuth from '../../../hooks/useAuth.hook';
+import useSocket from '../../../hooks/useSocket.hook';
 
 const MessagesForm = () => {
-    const { user } = useContext(AuthContext);
-    const { message } = useContext(SocketContext);
-    const dispatch = useDispatch();
-    const messages = useSelector(state => state.messages);
+    const { user } = useAuth();
+    const { message } = useSocket();
     const { currentChannelId } = useSelector(state => state.channels)
 
     const formik = useFormik({

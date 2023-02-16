@@ -15,7 +15,7 @@ import {
     addChannel,
     removeChannel,
     renameChannel
-} from '../store/slices/channelsSlice';
+} from '../../../store/slices/channelsSlice';
 const socket = io.connect('http://localhost:3000')
 
 const Channels = () => {

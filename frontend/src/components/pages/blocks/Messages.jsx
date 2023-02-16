@@ -4,7 +4,7 @@ import { useContext } from 'react'
 import MessagesHeader from './MessagesHeader';
 // import MessagesBox from './MessagesBox';
 import MessagesForm from './MessagesForm';
-import SocketContext from '../contexts/SocketContext';
+import SocketContext from '../../../contexts/SocketContext';
 import { useEffect } from 'react';
 const Messages = () => {
     const { message } = useContext(SocketContext)

@@ -1,8 +1,7 @@
 import { Navbar, Container, Button } from 'react-bootstrap';
-import { useContext } from 'react';
-import AuthContext from '../contexts/AuthContext';
-const Header = () => {
-    const { logOut } = useContext(AuthContext);
+import useAuth from '../../../hooks/useAuth.hook';
+const ChatHeader = () => {
+    const { logOut } = useAuth();
     return (
         <>
             <Navbar bg="dark" variant="dark">
@@ -17,4 +16,4 @@ const Header = () => {
     )
 }
 
-export default Header
+export default ChatHeader;
