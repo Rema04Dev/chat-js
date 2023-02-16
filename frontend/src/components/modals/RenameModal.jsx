@@ -2,11 +2,9 @@ import { Form, Button, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSelector } from 'react-redux';
-import { io } from 'socket.io-client';
 import notification from '../../utils/notify';
 import { useTranslation } from 'react-i18next'
 
-const socket = io.connect('http://localhost:3000')
 const RenameModal = ({ show, handleClose, channelId }) => {
     const channels = useSelector(state => state.channels.channels)
     const { t } = useTranslation();
@@ -26,7 +24,7 @@ const RenameModal = ({ show, handleClose, channelId }) => {
         }),
 
         onSubmit: (values) => {
-            socket.emit('renameChannel', { id: channelId, ...values });
+            // socket.emit('renameChannel', { id: channelId, ...values });
             handleClose();
             notification.rename(t('renameModal.success'));
         }

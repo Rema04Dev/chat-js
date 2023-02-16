@@ -6,7 +6,7 @@ import {
     Dropdown,
 } from 'react-bootstrap';
 import { Plus } from 'react-bootstrap-icons';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { io } from 'socket.io-client';
@@ -16,32 +16,12 @@ import {
     removeChannel,
     renameChannel
 } from '../../../store/slices/channelsSlice';
-const socket = io.connect('http://localhost:3000')
+import getModal from '../../modals/index';
 
 const Channels = () => {
     const dispatch = useDispatch();
     const { channels, currentChannelId } = useSelector(state => state.channels);
     const { t } = useTranslation();
-    // subscribe new channel
-    useEffect(() => {
-        socket.on('newChannel', (channel) => {
-            dispatch(addChannel(channel))
-        });
-    }, [socket]);
-
-    // subscribe remove channel
-    useEffect(() => {
-        socket.on('removeChannel', (id) => {
-            dispatch(removeChannel(id))
-        })
-    }, [socket]);
-
-    // subscribe rename channel
-    useEffect(() => {
-        socket.on('renameChannel', (channel) => {
-            dispatch(renameChannel(channel))
-        })
-    }, [socket]);
 
     const renderChannels = () => {
         return channels.map(({ id, name, removable }) => {

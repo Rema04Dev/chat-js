@@ -2,11 +2,9 @@ import { Form, Button, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSelector } from 'react-redux';
-import { io } from 'socket.io-client';
 import notification from '../../utils/notify';
 import { useTranslation } from 'react-i18next'
 
-const socket = io.connect('http://localhost:3000')
 const AddModal = ({ show, handleClose }) => {
     const channels = useSelector(state => state.channels.channels)
     const { t } = useTranslation();
@@ -25,7 +23,7 @@ const AddModal = ({ show, handleClose }) => {
         }),
 
         onSubmit: (values) => {
-            socket.emit('newChannel', values);
+            // socket.emit('newChannel', values);
             handleClose();
             notification.add(t('addModal.success'))
         }

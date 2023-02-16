@@ -1,13 +1,11 @@
 import { Button, Modal } from 'react-bootstrap';
-import { io } from 'socket.io-client';
 import notification from '../../utils/notify';
 import { useTranslation } from 'react-i18next';
 
-const socket = io.connect('http://localhost:3000');
 const RemoveModal = ({ show, handleClose, channelId }) => {
     const { t } = useTranslation();
     const handleRemove = () => {
-        socket.emit('removeChannel', ({ id: channelId }))
+        // socket.emit('removeChannel', ({ id: channelId }))
         handleClose();
         notification.remove(t('removeModal.success'));
     }
