@@ -16,7 +16,7 @@ import {
     removeChannel,
     renameChannel
 } from '../../../store/slices/channelsSlice';
-import getModal from '../../modals/index';
+import { showModal } from '../../../store/slices/modalsSlice';
 const Channels = () => {
     const dispatch = useDispatch();
     const { channels, currentChannelId } = useSelector(state => state.channels);
@@ -74,7 +74,8 @@ const Channels = () => {
                 <span>{t('channels.title')}</span>
                 <button type="button" className="p-0 text-primary btn btn-group-vertical">
                     <Plus
-                    // onClick={handleShowAddModal} 
+                        // onClick={handleShowAddModal} 
+                        onClick={() => dispatch(showModal({ modalType: 'adding', channelId: null }))}
                     />
                 </button>
             </div>

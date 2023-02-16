@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
 import ChatHeader from './blocks/ChatHeader.jsx';
@@ -7,10 +7,19 @@ import Channels from './blocks/Channels';
 import Messages from './blocks/Messages';
 import fetchData from '../../store/slices/fetchData';
 import useAuth from '../../hooks/useAuth.hook.js';
+import getModal from '../modals/index';
+
 const MainPage = () => {
     const { getAuthHeaders } = useAuth();
     const dispatch = useDispatch();
-
+    const modalType = useSelector(state => state.modals.modalType)
+    const renderModal = (type) => {
+        if (!type) {
+            return null;
+        }
+        const Modal = getModal(type);
+        return <Modal />
+    }
     useEffect(() => {
         const getData = async () => {
             const headers = getAuthHeaders()
@@ -27,6 +36,7 @@ const MainPage = () => {
                     <Channels />
                     <Messages />
                 </Row>
+                {renderModal(modalType)}
             </Container>
             <ToastContainer
                 position="bottom-left"

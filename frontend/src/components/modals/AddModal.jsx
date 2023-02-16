@@ -1,12 +1,14 @@
 import { Form, Button, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { hideModal } from '../../store/slices/modalsSlice';
 import notification from '../../utils/notify';
 import { useTranslation } from 'react-i18next'
 
-const AddModal = ({ show, handleClose }) => {
-    const channels = useSelector(state => state.channels.channels)
+const AddModal = () => {
+    const channels = useSelector(state => state.channels.channels);
+    const dispatch = useDispatch();
     const { t } = useTranslation();
     const formik = useFormik({
         initialValues: {
@@ -16,24 +18,23 @@ const AddModal = ({ show, handleClose }) => {
         validationSchema: Yup.object({
             name: Yup
                 .string()
-                .min(3, 'Название должно быть не менее 3 символов')
-                .max(20, 'Название не должно превышать 20 символов')
-                .notOneOf(channels.map((channel) => channel.name), `Канал уже существует`)
-                .required('Обязательное поле')
+                .min(3, t('addModal.validation.min'))
+                .notOneOf(channels.map((channel) => channel.name), 'addModal.validation.unique')
+                .required('addModal.validation.required')
         }),
 
         onSubmit: (values) => {
             // socket.emit('newChannel', values);
-            handleClose();
+            dispatch(hideModal());
             notification.add(t('addModal.success'))
         }
     })
 
     return (
         <>
-            <Modal show={show} onHide={handleClose}>
+            <Modal show>
                 <Modal.Header closeButton>
-                    <Modal.Title>Добавить канал</Modal.Title>
+                    <Modal.Title>{t('addModal.addChannel')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={formik.handleSubmit}>
@@ -52,11 +53,11 @@ const AddModal = ({ show, handleClose }) => {
                             }
                         </Form.Group>
                         <div>
-                            <Button variant="secondary" onClick={handleClose}>
-                                Отменить
+                            <Button variant="secondary" onClick={() => dispatch(hideModal())}>
+                                {t('addModal.cancel')}
                             </Button>
-                            <Button variant="primary" type='submit' onClick={formik.handleSubmit}>
-                                Отправить
+                            <Button variant="primary" type='submit'>
+                                {t('addModal.send')}
                             </Button>
                         </div>
                     </Form>

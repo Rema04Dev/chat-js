@@ -32,7 +32,16 @@ const ru = {
             rename: 'Переименовать'
         },
         addModal: {
-            success: 'Канал создан'
+            name: 'Имя канала',
+            cancel: 'Отменить',
+            send: 'Отправить',
+            success: 'Канал создан',
+            addChannel: 'Добавить канал',
+            validation: {
+                min: 'От 3 до 20 символов',
+                unique: 'Должно быть уникальным',
+                required: 'Обязательное поле',
+            }
         },
         renameModal: {
             success: 'Канал переименован'
