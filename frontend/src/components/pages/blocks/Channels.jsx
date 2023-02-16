@@ -17,7 +17,6 @@ import {
     renameChannel
 } from '../../../store/slices/channelsSlice';
 import getModal from '../../modals/index';
-
 const Channels = () => {
     const dispatch = useDispatch();
     const { channels, currentChannelId } = useSelector(state => state.channels);
