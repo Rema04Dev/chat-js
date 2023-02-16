@@ -18,7 +18,7 @@ const MainPage = () => {
             await dispatch(fetchData(headers))
         }
         getData()
-    }, [dispatch]);
+    }, [dispatch, getAuthHeaders]);
 
     return (
         <>

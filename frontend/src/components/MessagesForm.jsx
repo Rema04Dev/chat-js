@@ -1,18 +1,18 @@
-import { useState, useContext } from 'react'
-import { useSelector } from 'react-redux';
+import { useContext } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 import { Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ArrowRight } from 'react-bootstrap-icons';
 import AuthContext from '../contexts/AuthContext';
-import { io } from 'socket.io-client';
-
-const socket = io.connect('http://localhost:3000')
-
-// const formatMessage = (text) => text.trim();
+import SocketContext from '../contexts/SocketContext';
+import { addMessage } from '../store/slices/messagesSlice';
 
 const MessagesForm = () => {
     const { user } = useContext(AuthContext);
+    const { message } = useContext(SocketContext);
+    const dispatch = useDispatch();
+    const messages = useSelector(state => state.messages);
     const { currentChannelId } = useSelector(state => state.channels)
 
     const formik = useFormik({
@@ -24,14 +24,14 @@ const MessagesForm = () => {
                 .string()
                 .required()
         }),
-        onSubmit: (values) => {
-            const message = {
+        onSubmit: async (values) => {
+            const messageData = {
                 body: values.body,
                 channelId: currentChannelId,
                 username: user.username
             }
-            socket.emit('newMessage', message);
             values.body = '';
+            message.send(messageData)
         }
     })
     return (
