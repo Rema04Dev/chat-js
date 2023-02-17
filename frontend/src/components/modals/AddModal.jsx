@@ -33,7 +33,7 @@ const AddModal = () => {
     return (
         <>
             <Modal show>
-                <Modal.Header closeButton>
+                <Modal.Header closeButton onHide={() => dispatch(hideModal())}>
                     <Modal.Title>{t('addModal.addChannel')}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
