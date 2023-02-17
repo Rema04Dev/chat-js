@@ -1,3 +1,4 @@
+import { removeChannel } from './channelsSlice';
 import { createSlice } from '@reduxjs/toolkit';
 import fetchData from './fetchData';
 
@@ -16,6 +17,11 @@ const messages = createSlice({
         builder
             .addCase(fetchData.fulfilled, (state, action) => {
                 state.messages = action.payload.messages;
+            })
+            .addCase(removeChannel, (state, action) => {
+                const channelId = action.payload;
+                const restMessages = state.messages.filter((message) => message.channelId !== channelId);
+                state.messages = restMessages;
             })
     }
 })

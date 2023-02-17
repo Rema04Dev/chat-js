@@ -1,18 +1,20 @@
 import { Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useContext } from 'react'
+import useSocket from '../../../hooks/useSocket.hook';
 import MessagesHeader from './MessagesHeader';
 // import MessagesBox from './MessagesBox';
 import MessagesForm from './MessagesForm';
-import SocketContext from '../../../contexts/SocketContext';
 import { useEffect } from 'react';
 const Messages = () => {
-    const { message } = useContext(SocketContext)
+    const { message } = useSocket();
     const { channels, currentChannelId } = useSelector(state => state.channels)
     const messages = useSelector(state => state.messages.messages);
     useEffect(() => {
         message.listen()
-    }, [message])
+    }, [message]);
+    console.log(messages);
+
+
     const currentMessages = messages
         .filter((message) => message.channelId === currentChannelId);
 
