@@ -12,8 +12,6 @@ const Messages = () => {
     useEffect(() => {
         message.listen()
     }, [message]);
-    console.log(messages);
-
 
     const currentMessages = messages
         .filter((message) => message.channelId === currentChannelId);
