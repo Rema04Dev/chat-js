@@ -6,17 +6,11 @@ import {
     Dropdown,
 } from 'react-bootstrap';
 import { Plus } from 'react-bootstrap-icons';
-import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { io } from 'socket.io-client';
-import {
-    setCurrentChannelId,
-    addChannel,
-    removeChannel,
-    renameChannel
-} from '../../../store/slices/channelsSlice';
+import { setCurrentChannelId } from '../../../store/slices/channelsSlice';
 import { showModal } from '../../../store/slices/modalsSlice';
+
 const Channels = () => {
     const dispatch = useDispatch();
     const { channels, currentChannelId } = useSelector(state => state.channels);
@@ -53,12 +47,12 @@ const Channels = () => {
 
                         <Dropdown.Menu>
                             <Dropdown.Item
-                            // onClick={() => handleShowRenameModal(id)}
+                                onClick={() => dispatch(showModal({ modalType: 'renaming', channelId: id }))}
                             >
                                 {t('channels.rename')}
                             </Dropdown.Item>
                             <Dropdown.Item
-                            // onClick={() => handleShowRemoveModal(id)}
+                                onClick={() => dispatch(showModal({ modalType: 'removing', channelId: id }))}
                             >
                                 {t('channels.remove')}
                             </Dropdown.Item>
@@ -73,10 +67,7 @@ const Channels = () => {
             <div className="d-flex justify-content-between mb-2 ps-4 pe-2">
                 <span>{t('channels.title')}</span>
                 <button type="button" className="p-0 text-primary btn btn-group-vertical">
-                    <Plus
-                        // onClick={handleShowAddModal} 
-                        onClick={() => dispatch(showModal({ modalType: 'adding', channelId: null }))}
-                    />
+                    <Plus onClick={() => dispatch(showModal({ modalType: 'adding', channelId: null }))} />
                 </button>
             </div>
             <ul className="nav flex-column nav-pills nav-fill px-2">
@@ -87,4 +78,4 @@ const Channels = () => {
     )
 }
 
-export default Channels
+export default Channels;

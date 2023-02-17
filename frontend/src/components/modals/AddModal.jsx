@@ -4,12 +4,14 @@ import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 import { hideModal } from '../../store/slices/modalsSlice';
 import notification from '../../utils/notify';
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next';
+import useSocket from '../../hooks/useSocket.hook';
 
 const AddModal = () => {
     const channels = useSelector(state => state.channels.channels);
     const dispatch = useDispatch();
     const { t } = useTranslation();
+    const { channel } = useSocket();
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -18,13 +20,13 @@ const AddModal = () => {
         validationSchema: Yup.object({
             name: Yup
                 .string()
-                .min(3, t('addModal.validation.min'))
+                .min(3, t('addModal.validation.length'))
                 .notOneOf(channels.map((channel) => channel.name), 'addModal.validation.unique')
                 .required('addModal.validation.required')
         }),
 
         onSubmit: (values) => {
-            // socket.emit('newChannel', values);
+            channel.add(values);
             dispatch(hideModal());
             notification.add(t('addModal.success'))
         }

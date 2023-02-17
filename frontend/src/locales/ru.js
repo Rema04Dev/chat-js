@@ -38,16 +38,28 @@ const ru = {
             success: 'Канал создан',
             addChannel: 'Добавить канал',
             validation: {
-                min: 'От 3 до 20 символов',
+                length: 'От 3 до 20 символов',
                 unique: 'Должно быть уникальным',
                 required: 'Обязательное поле',
             }
         },
         renameModal: {
-            success: 'Канал переименован'
+            success: 'Канал переименован',
+            name: 'Имя канала',
+            cancel: 'Отменить',
+            send: 'Отправить',
+            validation: {
+                length: 'От 3 до 20 символов',
+                unique: 'Должно быть уникальным',
+                required: 'Обязательное поле',
+            }
         },
         removeModal: {
-            success: 'Канал удалён'
+            removeChannel: 'Удалить канал',
+            success: 'Канал удалён',
+            confirm: 'Уверены?',
+            cancel: 'Отменить',
+            remove: 'Удалить',
         }
     }
 };
