@@ -1,6 +1,7 @@
 import { Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import useSocket from '../../../hooks/useSocket.hook';
+import MessagesSkeleton from '../../skeletons/MessagesSkeleton'
 import MessagesHeader from './MessagesHeader';
 // import MessagesBox from './MessagesBox';
 import MessagesForm from './MessagesForm';
@@ -8,7 +9,7 @@ import { useEffect } from 'react';
 const Messages = () => {
     const { message } = useSocket();
     const { channels, currentChannelId } = useSelector(state => state.channels)
-    const messages = useSelector(state => state.messages.messages);
+    const { messages, loadingStatus, error } = useSelector(state => state.messages);
     useEffect(() => {
         message.listen()
     }, [message]);
@@ -19,10 +20,16 @@ const Messages = () => {
     const currentChannel = channels
         .find((channel) => channel.id === currentChannelId);
 
-    const renderMessages = () => currentMessages
-        .map(({ id, body, username }) => (
-            <div key={id} className="text-break mb-2"><b>{username}</b>: {body}</div>
-        ));
+    const renderMessages = () => {
+        if (loadingStatus === 'loading') {
+            return <MessagesSkeleton />
+        }
+        const elements = currentMessages
+            .map(({ id, body, username }) => (
+                <div key={id} className="text-break mb-2"><b>{username}</b>: {body}</div>
+            ));
+        return elements
+    };
 
     return (
         <Col className='p-0 h-100'>

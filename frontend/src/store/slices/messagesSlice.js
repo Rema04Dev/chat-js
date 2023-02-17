@@ -4,6 +4,8 @@ import fetchData from './fetchData';
 
 const initialState = {
     messages: [],
+    loadingStatus: 'idle',
+    error: null
 }
 
 const messages = createSlice({
@@ -15,8 +17,14 @@ const messages = createSlice({
         }
     }, extraReducers: (builder) => {
         builder
+            .addCase(fetchData.pending, (state) => {
+                state.loadingStatus = 'loading';
+                state.error = null;
+            })
             .addCase(fetchData.fulfilled, (state, action) => {
                 state.messages = action.payload.messages;
+                state.loadingStatus = 'succeed';
+                state.error = null;
             })
             .addCase(removeChannel, (state, action) => {
                 const channelId = action.payload;

@@ -36,7 +36,7 @@ const Channels = () => {
                     <button
                         onClick={() => dispatch(setCurrentChannelId(id))}
                         type="button"
-                        className={`w-100 text-start rounded-0 btn ${channelCSS}`}>
+                        className={`w-100 text-start rounded-0 ${channelCSS}`}>
                         <span className="me-1">#</span>{name}
                     </button>
                 </li>
@@ -47,7 +47,7 @@ const Channels = () => {
                         <button
                             onClick={() => dispatch(setCurrentChannelId(id))}
                             type="button"
-                            className={`w-100 text-start rounded-0 btn ${channelCSS}`}>
+                            className={`w-100 text-start rounded-0 ${channelCSS}`}>
                             <span className="me-1">#</span>{name}
                         </button>
 
