@@ -59,10 +59,14 @@ const RenameModal = () => {
                             }
                         </Form.Group>
                         <div>
-                            <Button variant="secondary" onClick={() => dispatch(hideModal())}>
+                            <Button
+                                className='m-1'
+                                variant="secondary" onClick={() => dispatch(hideModal())}>
                                 {t('renameModal.cancel')}
                             </Button>
-                            <Button variant="primary" type='submit'>
+                            <Button
+                                className='m-1'
+                                variant="primary" type='submit'>
                                 {t('renameModal.send')}
                             </Button>
                         </div>

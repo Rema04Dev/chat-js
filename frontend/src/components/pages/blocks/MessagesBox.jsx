@@ -6,7 +6,6 @@ const MessagesBox = () => {
 
     const currentMessages = messages
         .filter((message) => message.channelId === currentChannelId);
-
     const renderMessages = () => currentMessages
         .map(({ id, body, username }) => (
             <div key={id} className="text-break mb-2"><b>{username}</b>: {body}</div>

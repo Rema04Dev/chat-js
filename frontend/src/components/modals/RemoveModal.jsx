@@ -27,11 +27,13 @@ const RemoveModal = () => {
                     <p className='lead'>{t('removeModal.confirm')}</p>
                     <div>
                         <Button
+                            className='m-1'
                             variant="secondary"
                             onClick={() => dispatch(hideModal())}>
                             {t('removeModal.cancel')}
                         </Button>
                         <Button
+                            className='m-1'
                             variant="danger"
                             onClick={handleRemove}>
                             {t('removeModal.remove')}

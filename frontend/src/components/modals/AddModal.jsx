@@ -21,8 +21,8 @@ const AddModal = () => {
             name: Yup
                 .string()
                 .min(3, t('addModal.validation.length'))
-                .notOneOf(channels.map((channel) => channel.name), 'addModal.validation.unique')
-                .required('addModal.validation.required')
+                .notOneOf(channels.map((channel) => channel.name), t('addModal.validation.unique'))
+                .required(t('addModal.validation.required'))
         }),
 
         onSubmit: (values) => {
@@ -54,14 +54,16 @@ const AddModal = () => {
                                 <p className='feedback text-danger'>{formik.errors.name}</p>
                             }
                         </Form.Group>
-                        <div>
-                            <Button variant="secondary" onClick={() => dispatch(hideModal())}>
-                                {t('addModal.cancel')}
-                            </Button>
-                            <Button variant="primary" type='submit'>
-                                {t('addModal.send')}
-                            </Button>
-                        </div>
+                        <Button
+                            className='m-1'
+                            variant="secondary" onClick={() => dispatch(hideModal())}>
+                            {t('addModal.cancel')}
+                        </Button>
+                        <Button
+                            className='m-1'
+                            variant="primary" type='submit'>
+                            {t('addModal.send')}
+                        </Button>
                     </Form>
                 </Modal.Body>
             </Modal>
