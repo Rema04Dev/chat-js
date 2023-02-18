@@ -1,5 +1,5 @@
 import { Navbar, Container, Button } from 'react-bootstrap';
-import useAuth from '../../../hooks/useAuth.hook';
+import useAuth from '../hooks/useAuth.hook';
 import { useTranslation } from 'react-i18next';
 const ChatHeader = () => {
     const { logOut, user } = useAuth();

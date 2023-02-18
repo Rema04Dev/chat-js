@@ -5,8 +5,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import leoProfanity from 'leo-profanity';
 import { ArrowRight } from 'react-bootstrap-icons';
-import useAuth from '../../../hooks/useAuth.hook';
-import useSocket from '../../../hooks/useSocket.hook';
+import useAuth from '../../hooks/useAuth.hook';
+import useSocket from '../../hooks/useSocket.hook';
 
 const MessagesForm = () => {
     const { user } = useAuth();

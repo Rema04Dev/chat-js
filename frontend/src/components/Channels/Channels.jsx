@@ -8,8 +8,8 @@ import {
 import { Plus } from 'react-bootstrap-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { setCurrentChannelId } from '../../../store/slices/channelsSlice';
-import { showModal } from '../../../store/slices/modalsSlice';
+import { setCurrentChannelId } from '../../store/slices/channelsSlice';
+import { showModal } from '../../store/slices/modalsSlice';
 const Channels = () => {
     const dispatch = useDispatch();
     const { channels, currentChannelId } = useSelector(state => state.channels);

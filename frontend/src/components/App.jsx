@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import { MainPage, LoginPage, SignUpPage, NotFoundPage } from './pages'
 import PrivateRoute from './PrivateRoute';
 import AuthProvider from './AuthProvider';
-import ChatHeader from './pages/blocks/ChatHeader.jsx';
+import ChatHeader from './ChatHeader.jsx';
 const App = () => {
     return (
         <>
