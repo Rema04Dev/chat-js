@@ -8,11 +8,11 @@ import useSocket from '../../hooks/useSocket.hook';
 const RemoveModal = () => {
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const { channel } = useSocket();
+    const { removeChannel } = useSocket();
     const channelId = useSelector(state => state.modals.channelId);
 
     const handleRemove = () => {
-        channel.remove({ id: channelId })
+        removeChannel(channelId)
         notification.remove(t('removeModal.success'));
         dispatch(hideModal());
     };

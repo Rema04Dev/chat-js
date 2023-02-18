@@ -8,7 +8,7 @@ import useSocket from '../../../hooks/useSocket.hook';
 
 const MessagesForm = () => {
     const { user } = useAuth();
-    const { message } = useSocket();
+    const { addMessage } = useSocket();
     const { currentChannelId } = useSelector(state => state.channels)
 
     const formik = useFormik({
@@ -26,8 +26,8 @@ const MessagesForm = () => {
                 channelId: currentChannelId,
                 username: user.username
             }
+            addMessage(messageData)
             values.body = '';
-            message.send(messageData)
         }
     })
     return (

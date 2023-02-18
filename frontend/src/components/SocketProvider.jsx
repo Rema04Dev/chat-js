@@ -1,40 +1,64 @@
 import { io } from 'socket.io-client';
 import SocketContext from '../contexts/SocketContext';
-import { addMessage } from '../store/slices/messagesSlice';
-import { addChannel, renameChannel, removeChannel } from '../store/slices/channelsSlice';
+import { actions } from '../store/slices/messagesSlice';
+import * as channelsActions from '../store/slices/channelsSlice';
 import { useDispatch } from 'react-redux';
 
 const SocketProvider = ({ children }) => {
-    const socket = io.connect('http://localhost:3000');
+    const socket = io();
     const dispatch = useDispatch();
-    const message = {
-        listen: () => {
-            socket.on('newMessage', (data) => {
-                dispatch(addMessage(data))
-            })
-        },
-        send: (data) => {
-            socket.emit('newMessage', data)
-            dispatch(addMessage(data))
-        }
+    socket.on('newMessage', message => {
+        dispatch(actions.addMessage(message))
+    });
+    socket.on('newChannel', channel => {
+        dispatch(channelsActions.addChannel(channel))
+    });
+    socket.on('renameChannel', channelName => {
+        dispatch(channelsActions.renameChannel(channelName))
+    });
+    socket.on('removeChannel', channelId => {
+        dispatch(channelsActions.removeChannel(channelId))
+    });
+
+    const addMessage = (message) => {
+        socket.emit('newMessage', message, response => {
+            if (response.status === 'ok') {
+                console.log(response.status);
+            }
+        })
     };
 
-    const channel = {
-        add: (channel) => {
-            socket.emit('newChannel', channel);
-            dispatch(addChannel(channel));
-        },
-        rename: (newChannelName) => {
-            socket.emit('renameChannel', newChannelName);
-            dispatch(renameChannel(newChannelName));
-        },
-        remove: (channelId) => {
-            socket.emit('removeChannel', channelId);
-            dispatch(removeChannel(channelId));
-        }
+    const addChannel = (channel) => {
+        socket.emit('newChannel', channel, response => {
+            if (response.status === 'ok') {
+                console.log(response.status);
+            }
+        })
+    };
+
+    const renameChannel = (channelName) => {
+        socket.emit('renameChannel', channelName, response => {
+            if (response.status === 'ok') {
+                console.log(response.status)
+            }
+        })
+    };
+
+    const removeChannel = (channelId) => {
+        socket.emit('removeChannel', { id: channelId }, response => {
+            if (response.status === 'ok') {
+                console.log(response.status);
+            }
+        })
     }
+
     return (
-        <SocketContext.Provider value={{ message, channel }}>
+        <SocketContext.Provider value={{
+            addMessage,
+            addChannel,
+            renameChannel,
+            removeChannel
+        }}>
             {children}
         </SocketContext.Provider>
     )

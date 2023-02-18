@@ -35,4 +35,4 @@ const messages = createSlice({
 })
 
 export default messages.reducer;
-export const { messagesFetched, addMessage } = messages.actions;
+export const { actions } = messages

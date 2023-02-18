@@ -11,7 +11,7 @@ const AddModal = () => {
     const channels = useSelector(state => state.channels.channels);
     const dispatch = useDispatch();
     const { t } = useTranslation();
-    const { channel } = useSocket();
+    const { addChannel } = useSocket();
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -26,7 +26,7 @@ const AddModal = () => {
         }),
 
         onSubmit: (values) => {
-            channel.add(values);
+            addChannel(values);
             dispatch(hideModal());
             notification.add(t('addModal.success'))
         }

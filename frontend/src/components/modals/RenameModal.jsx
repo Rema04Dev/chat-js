@@ -12,7 +12,7 @@ const RenameModal = () => {
     const channelId = useSelector(state => state.modals.channelId);
     const dispatch = useDispatch();
     const { t } = useTranslation();
-    const { channel } = useSocket();
+    const { renameChannel } = useSocket();
 
     const formik = useFormik({
         initialValues: {
@@ -28,7 +28,7 @@ const RenameModal = () => {
         }),
 
         onSubmit: (values) => {
-            channel.rename({ id: channelId, ...values });
+            renameChannel({ id: channelId, ...values });
             dispatch(hideModal());
             notification.rename(t('renameModal.success'));
         }
