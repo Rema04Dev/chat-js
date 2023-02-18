@@ -1,5 +1,9 @@
 const ru = {
     translation: {
+        chatHeader: {
+            title: 'Hexlet Chat',
+            logOut: 'Выйти'
+        },
         signup: {
             title: 'Регистрация',
             username: 'Имя пользователя',
