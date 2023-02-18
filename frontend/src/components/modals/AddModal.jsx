@@ -1,6 +1,7 @@
 import { Form, Button, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import leoProfanity from 'leo-profanity';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRef, useEffect } from 'react';
 import { hideModal } from '../../store/slices/modalsSlice';
@@ -33,8 +34,9 @@ const AddModal = () => {
         }),
 
         onSubmit: (values) => {
+            const cleanedName = leoProfanity.clean(values.name);
             const channelData = {
-                ...values,
+                name: cleanedName,
                 removable: true,
             }
             addChannel(channelData);

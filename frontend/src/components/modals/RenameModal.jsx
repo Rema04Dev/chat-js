@@ -1,6 +1,7 @@
 import { Form, Button, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import leoProfanity from 'leo-profanity';
 import { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import notification from '../../utils/notify';
@@ -34,7 +35,8 @@ const RenameModal = () => {
         }),
 
         onSubmit: (values) => {
-            renameChannel({ id: channelId, ...values });
+            const cleanedName = leoProfanity.clean(values.name);
+            renameChannel({ id: channelId, name: cleanedName });
             dispatch(hideModal());
             notification.rename(t('renameModal.success'));
         }

@@ -3,6 +3,7 @@ import { Form } from 'react-bootstrap';
 import { useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import leoProfanity from 'leo-profanity';
 import { ArrowRight } from 'react-bootstrap-icons';
 import useAuth from '../../../hooks/useAuth.hook';
 import useSocket from '../../../hooks/useSocket.hook';
@@ -27,8 +28,11 @@ const MessagesForm = () => {
                 .required()
         }),
         onSubmit: async (values) => {
+            const { body } = values;
+            const cleanedMessage = leoProfanity.clean(body);
+
             const messageData = {
-                body: values.body,
+                body: cleanedMessage,
                 channelId: currentChannelId,
                 username: user.username
             }
