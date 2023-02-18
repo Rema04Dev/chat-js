@@ -3,8 +3,10 @@ import SocketContext from '../contexts/SocketContext';
 import { actions } from '../store/slices/messagesSlice';
 import * as channelsActions from '../store/slices/channelsSlice';
 import { useDispatch } from 'react-redux';
+import useAuth from '../hooks/useAuth.hook';
 
 const SocketProvider = ({ children }) => {
+    const { user } = useAuth();
     const socket = io();
     const dispatch = useDispatch();
     socket.on('newMessage', message => {
@@ -12,6 +14,9 @@ const SocketProvider = ({ children }) => {
     });
     socket.on('newChannel', channel => {
         dispatch(channelsActions.addChannel(channel))
+        if (channel.author === user.username) {
+            dispatch(channelsActions.setCurrentChannelId(channel.id));
+        }
     });
     socket.on('renameChannel', channelName => {
         dispatch(channelsActions.renameChannel(channelName))
