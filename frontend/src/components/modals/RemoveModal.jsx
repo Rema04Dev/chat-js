@@ -12,7 +12,7 @@ const RemoveModal = () => {
     const channelId = useSelector(state => state.modals.channelId);
 
     const handleRemove = () => {
-        removeChannel(channelId)
+        removeChannel(channelId);
         notification.remove(t('removeModal.success'));
         dispatch(hideModal());
     };
