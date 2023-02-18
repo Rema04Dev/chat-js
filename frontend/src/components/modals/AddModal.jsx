@@ -6,7 +6,6 @@ import { hideModal } from '../../store/slices/modalsSlice';
 import notification from '../../utils/notify';
 import { useTranslation } from 'react-i18next';
 import useSocket from '../../hooks/useSocket.hook';
-
 const AddModal = () => {
     const channels = useSelector(state => state.channels.channels);
     const dispatch = useDispatch();
