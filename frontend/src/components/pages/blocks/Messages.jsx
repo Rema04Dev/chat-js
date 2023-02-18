@@ -18,7 +18,7 @@ const Messages = () => {
     return (
         <Col className='p-0 h-100'>
             <div className="d-flex flex-column h-100">
-                <MessagesHeader count={currentMessages.length} channelName={currentChannel.name} />
+                <MessagesHeader count={currentMessages.length ?? null} channelName={currentChannel.name ?? null} />
                 <MessagesBox currentMessages={currentMessages} />
                 <MessagesForm />
             </div>

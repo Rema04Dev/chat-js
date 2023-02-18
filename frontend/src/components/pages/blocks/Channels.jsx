@@ -5,7 +5,6 @@ import {
     Button,
     Dropdown,
 } from 'react-bootstrap';
-import ChannelsSkeleton from '../../skeletons/ChannelsSkeleton';
 import { Plus } from 'react-bootstrap-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -14,17 +13,10 @@ import { showModal } from '../../../store/slices/modalsSlice';
 
 const Channels = () => {
     const dispatch = useDispatch();
-    const {
-        channels,
-        currentChannelId,
-        loadingStatus,
-        error } = useSelector(state => state.channels);
+    const { channels, currentChannelId } = useSelector(state => state.channels);
 
     const { t } = useTranslation();
     const renderChannels = () => {
-        if (loadingStatus === 'loading') {
-            return <ChannelsSkeleton />
-        }
         const elements = channels.map(({ id, name, removable }) => {
             const channelCSS = cn('btn', {
                 'btn-secondary': id === currentChannelId,
