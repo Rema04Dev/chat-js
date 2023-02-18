@@ -1,11 +1,4 @@
-import { useSelector } from 'react'
-
-const MessagesBox = () => {
-    const messages = useSelector(state => state.messages.messages);
-    const { currentChannelId } = useSelector(state => state.channels)
-
-    const currentMessages = messages
-        .filter((message) => message.channelId === currentChannelId);
+const MessagesBox = ({ currentMessages }) => {
     const renderMessages = () => currentMessages
         .map(({ id, body, username }) => (
             <div key={id} className="text-break mb-2"><b>{username}</b>: {body}</div>

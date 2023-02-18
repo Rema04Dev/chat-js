@@ -7,7 +7,6 @@ import { useDispatch } from 'react-redux';
 const SocketProvider = ({ children }) => {
     const socket = io.connect('http://localhost:3000');
     const dispatch = useDispatch();
-
     const message = {
         listen: () => {
             socket.on('newMessage', (data) => {
