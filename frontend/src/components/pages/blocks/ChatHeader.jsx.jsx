@@ -1,7 +1,7 @@
 import { Navbar, Container, Button } from 'react-bootstrap';
 import useAuth from '../../../hooks/useAuth.hook';
 const ChatHeader = () => {
-    const { logOut } = useAuth();
+    const { logOut, user } = useAuth();
     return (
         <>
             <Navbar bg="dark" variant="dark">
@@ -9,7 +9,7 @@ const ChatHeader = () => {
                     <Navbar.Brand>
                         Chat JS
                     </Navbar.Brand>
-                    <Button onClick={logOut}>Выйти</Button>
+                    {user && <Button onClick={logOut}>Выйти</Button>}
                 </Container>
             </Navbar>
         </>
