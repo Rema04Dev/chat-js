@@ -22,7 +22,7 @@ const RenameModal = () => {
 
     const formik = useFormik({
         initialValues: {
-            name: ''
+            name: channels.find(channel => channel.id === channelId).name
         },
 
         validationSchema: Yup.object({
