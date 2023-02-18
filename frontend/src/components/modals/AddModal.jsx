@@ -2,6 +2,7 @@ import { Form, Button, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
+import { useRef, useEffect } from 'react';
 import { hideModal } from '../../store/slices/modalsSlice';
 import notification from '../../utils/notify';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +13,12 @@ const AddModal = () => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const { addChannel } = useSocket();
+    const inputEl = useRef();
+
+    useEffect(() => {
+        inputEl.current.select();
+    }, []);
+
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -48,6 +55,8 @@ const AddModal = () => {
                             <Form.Control
                                 value={formik.values.name}
                                 onChange={formik.handleChange}
+                                ref={inputEl}
+                                aria-label={t('addModal.addChannel')}
                                 name="name"
                                 type="text"
                                 autoFocus

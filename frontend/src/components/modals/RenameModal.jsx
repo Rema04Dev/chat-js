@@ -1,6 +1,7 @@
 import { Form, Button, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import notification from '../../utils/notify';
 import { useTranslation } from 'react-i18next'
@@ -13,6 +14,11 @@ const RenameModal = () => {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const { renameChannel } = useSocket();
+    const inputEl = useRef();
+
+    useEffect(() => {
+        inputEl.current.select();
+    }, []);
 
     const formik = useFormik({
         initialValues: {
@@ -48,6 +54,8 @@ const RenameModal = () => {
                             <Form.Control
                                 value={formik.values.name}
                                 onChange={formik.handleChange}
+                                ref={inputEl}
+                                aria-label={t('renameModal.name')}
                                 name="name"
                                 type="text"
                                 autoFocus

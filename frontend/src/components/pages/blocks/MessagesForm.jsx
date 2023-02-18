@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Form } from 'react-bootstrap';
+import { useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ArrowRight } from 'react-bootstrap-icons';
@@ -10,6 +11,11 @@ const MessagesForm = () => {
     const { user } = useAuth();
     const { addMessage } = useSocket();
     const { currentChannelId } = useSelector(state => state.channels)
+    const inputEl = useRef();
+
+    useEffect(() => {
+        inputEl.current.select();
+    }, []);
 
     const formik = useFormik({
         initialValues: {
@@ -43,6 +49,8 @@ const MessagesForm = () => {
                         aria-label='Новое сообщение'
                         className='border-0 p-0 ps-2 form-control'
                         name='body'
+                        ref={inputEl}
+                        autoFocus
                         placeholder='Введите сообщение...'
                         autoComplete='off' />
                     <button type="submit" disabled="" className="btn btn-group-vertical">
