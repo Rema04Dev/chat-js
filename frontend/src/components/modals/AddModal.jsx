@@ -6,13 +6,12 @@ import { hideModal } from '../../store/slices/modalsSlice';
 import notification from '../../utils/notify';
 import { useTranslation } from 'react-i18next';
 import useSocket from '../../hooks/useSocket.hook';
-import useAuth from '../../hooks/useAuth.hook';
+
 const AddModal = () => {
     const channels = useSelector(state => state.channels.channels);
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const { addChannel } = useSocket();
-    const { user } = useAuth();
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -30,7 +29,6 @@ const AddModal = () => {
             const channelData = {
                 ...values,
                 removable: true,
-                author: user.username,
             }
             addChannel(channelData);
             dispatch(hideModal());

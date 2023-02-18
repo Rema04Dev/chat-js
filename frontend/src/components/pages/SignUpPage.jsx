@@ -45,7 +45,6 @@ const SignUpPage = () => {
 
             try {
                 const response = await axios.post(routes.signupPath(), userData)
-                console.log(response.data);
                 logIn({ ...response.data })
                 navigate('/')
             } catch (e) {

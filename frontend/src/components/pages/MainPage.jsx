@@ -10,7 +10,8 @@ import useAuth from '../../hooks/useAuth.hook.js';
 import getModal from '../modals/index';
 
 const MainPage = () => {
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const { getAuthHeaders } = useAuth();
     const dispatch = useDispatch();
     const modalType = useSelector(state => state.modals.modalType)
@@ -24,12 +25,20 @@ const MainPage = () => {
     useEffect(() => {
         const getData = async () => {
             setLoading(true)
-            const headers = getAuthHeaders()
-            await dispatch(fetchData(headers))
-            setLoading(false);
+            try {
+                const headers = getAuthHeaders()
+                await dispatch(fetchData(headers))
+                setLoading(false);
+
+            } catch (e) {
+                setError('server error')
+                console.log(e)
+            }
+
         }
         getData()
     }, [dispatch, getAuthHeaders]);
+
     if (loading) {
         return (
             <div className="d-flex justify-content-center align-items-center h-100">

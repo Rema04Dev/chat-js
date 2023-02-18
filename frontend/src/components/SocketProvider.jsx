@@ -2,21 +2,16 @@ import { io } from 'socket.io-client';
 import SocketContext from '../contexts/SocketContext';
 import { actions } from '../store/slices/messagesSlice';
 import * as channelsActions from '../store/slices/channelsSlice';
-import { useDispatch } from 'react-redux';
-import useAuth from '../hooks/useAuth.hook';
-
+import { useDispatch, useSelector } from 'react-redux';
 const SocketProvider = ({ children }) => {
-    const { user } = useAuth();
     const socket = io();
     const dispatch = useDispatch();
+
     socket.on('newMessage', message => {
         dispatch(actions.addMessage(message))
     });
     socket.on('newChannel', channel => {
         dispatch(channelsActions.addChannel(channel))
-        if (channel.author === user.username) {
-            dispatch(channelsActions.setCurrentChannelId(channel.id));
-        }
     });
     socket.on('renameChannel', channelName => {
         dispatch(channelsActions.renameChannel(channelName))
@@ -26,7 +21,7 @@ const SocketProvider = ({ children }) => {
     });
 
     const addMessage = (message) => {
-        socket.emit('newMessage', message, response => {
+        socket.emit('newMessage', message, (response) => {
             if (response.status === 'ok') {
                 console.log(response.status);
             }
@@ -34,9 +29,10 @@ const SocketProvider = ({ children }) => {
     };
 
     const addChannel = (channel) => {
-        socket.emit('newChannel', channel, response => {
+        socket.emit('newChannel', channel, (response) => {
             if (response.status === 'ok') {
-                console.log(response.status);
+                const { id } = response.data;
+                dispatch(channelsActions.setCurrentChannelId(id))
             }
         })
     };
