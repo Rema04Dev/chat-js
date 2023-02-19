@@ -76,7 +76,7 @@ const SignUpPage = () => {
                                 id="floatingLogin"
                                 name="username"
                                 autoComplete='off'
-                                disabled={isSubmitting}
+                                disabled={formik.isSubmitting}
                                 placeholder={`${t('signup.username')}`}
                                 isInvalid={formik.errors.username && formik.touched.username} />
                             <Form.Label htmlFor='floatingLogin'>{t('signup.username')}</Form.Label>
@@ -94,7 +94,7 @@ const SignUpPage = () => {
                                 id="floatingPassword"
                                 name="password"
                                 autoComplete='off'
-                                disabled={isSubmitting}
+                                disabled={formik.isSubmitting}
                                 placeholder={`${t('signup.password')}`}
                                 isInvalid={formik.errors.password && formik.touched.password} />
                             <Form.Label htmlFor='floatingPassword'>{t('signup.password')}</Form.Label>
@@ -128,10 +128,10 @@ const SignUpPage = () => {
                             </Form.Text>
                         </Form.Group>
                         <Button
-                            disabled={isSubmitting}
+                            disabled={formik.isSubmitting}
                             variant="primary"
                             type="submit">
-                            {isSubmitting && <CustomSpinner size="sm" />}
+                            {formik.isSubmitting && <CustomSpinner size="sm" />}
                             {t('signup.submit')}
                         </Button>
                     </Form>
