@@ -70,6 +70,9 @@ const ru = {
             confirm: 'Уверены?',
             cancel: 'Отменить',
             remove: 'Удалить',
+        },
+        errors: {
+            network: 'Ошибка сети'
         }
     }
 };

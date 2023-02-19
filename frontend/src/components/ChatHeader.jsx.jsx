@@ -1,4 +1,5 @@
 import { Navbar, Container, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth.hook';
 import { useTranslation } from 'react-i18next';
 const ChatHeader = () => {
@@ -9,7 +10,7 @@ const ChatHeader = () => {
             <Navbar bg="dark" variant="dark">
                 <Container>
                     <Navbar.Brand>
-                        {t('chatHeader.title')}
+                        <Link to="/" className='text-white text-decoration-none'>{t('chatHeader.title')}</Link>
                     </Navbar.Brand>
                     {user &&
                         <Button onClick={logOut}>{t('chatHeader.logOut')}</Button>}
