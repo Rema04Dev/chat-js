@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "main": "index.js",
   "proxy": "http://localhost:5001",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.5",
