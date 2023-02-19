@@ -31,12 +31,12 @@ const MainPage = () => {
 
             } catch (e) {
                 setError('server error')
-                console.log(e)
+                console.log(error)
             }
 
         }
         getData()
-    }, [dispatch, getAuthHeaders]);
+    }, [dispatch, getAuthHeaders, error]);
 
     if (loading) {
         return (

@@ -1,3 +1,3 @@
 import ru from './ru';
-
-export default { ru };
+const russian = { ru }
+export default russian;

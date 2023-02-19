@@ -2,7 +2,6 @@ import cn from 'classnames';
 import {
     Col,
     ButtonGroup,
-    Button,
     Dropdown,
 } from 'react-bootstrap';
 import { Plus } from 'react-bootstrap-icons';
