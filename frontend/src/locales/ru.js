@@ -35,6 +35,11 @@ const ru = {
             remove: 'Удалить',
             rename: 'Переименовать'
         },
+        messages: {
+            new: 'Новое сообщение',
+            input: 'Введите сообщение',
+            send: 'Отправить'
+        },
         messagesCount: {
             key_zero: '{{count}} сообщений',
             key_one: '{{count}} сообщение',
