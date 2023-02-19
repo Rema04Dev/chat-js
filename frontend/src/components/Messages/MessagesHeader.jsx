@@ -1,4 +1,13 @@
-const MessagesHeader = ({ channelName, count }) => {
+import MessagesHeaderSkeleton from '../skeletons/MessagesHeaderSkeleton.jsx';
+
+const MessagesHeader = ({ currentMessages, currentChannel }) => {
+    if (!currentChannel) {
+        return <MessagesHeaderSkeleton channelName="m-0" />
+    };
+
+    const count = currentMessages.length;
+    const channelName = currentChannel.name;
+
     return (
         <>
             <div className="bg-light mb-4 p-3 shadow-sm small">
