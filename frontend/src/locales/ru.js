@@ -35,6 +35,12 @@ const ru = {
             remove: 'Удалить',
             rename: 'Переименовать'
         },
+        messagesCount: {
+            key_zero: '{{count}} сообщений',
+            key_one: '{{count}} сообщение',
+            key_few: '{{count}} сообщения',
+            key_many: '{{count}} сообщений',
+        },
         addModal: {
             name: 'Имя канала',
             cancel: 'Отменить',

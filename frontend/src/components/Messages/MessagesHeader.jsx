@@ -1,6 +1,8 @@
+import { useTranslation } from 'react-i18next';
 import MessagesHeaderSkeleton from '../skeletons/MessagesHeaderSkeleton.jsx';
 
 const MessagesHeader = ({ currentMessages, currentChannel }) => {
+    const { t } = useTranslation();
     if (!currentChannel) {
         return <MessagesHeaderSkeleton channelName="m-0" />
     };
@@ -14,7 +16,7 @@ const MessagesHeader = ({ currentMessages, currentChannel }) => {
                 <p className="m-0">
                     <b># {channelName}</b>
                 </p>
-                <span className="text-muted">{count} сообщение</span>
+                <span className="text-muted">{t('messagesCount.key', { count })}</span>
             </div>
         </>
     )
