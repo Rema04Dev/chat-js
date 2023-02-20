@@ -1,22 +1,25 @@
-import { useSelector } from 'react-redux';
-import { Form } from 'react-bootstrap';
 import { useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
+import { Form, Button } from 'react-bootstrap';
 import * as Yup from 'yup';
 import leoProfanity from 'leo-profanity';
 import { ArrowRight } from 'react-bootstrap-icons';
 import useAuth from '../../hooks/useAuth.hook';
 import useSocket from '../../hooks/useSocket.hook';
+import CustomSpinner from '../skeletons/CustomSpinner';
 
 const MessagesForm = () => {
     const { user } = useAuth();
     const { addMessage } = useSocket();
     const { currentChannelId } = useSelector(state => state.channels)
     const inputEl = useRef();
+    const { t } = useTranslation();
 
     useEffect(() => {
         inputEl.current.select();
-    }, [currentChannelId]);
+    }, [currentChannelId, addMessage]);
 
     const formik = useFormik({
         initialValues: {
@@ -27,44 +30,52 @@ const MessagesForm = () => {
                 .string()
                 .required()
         }),
-        onSubmit: async (values) => {
+        onSubmit: (values) => {
             const { body } = values;
             const cleanedMessage = leoProfanity.clean(body);
-
             const messageData = {
                 body: cleanedMessage,
                 channelId: currentChannelId,
-                username: user.username
+                username: user.username,
             }
-            addMessage(messageData)
-            values.body = '';
-        }
-    })
+            addMessage(messageData);
+            formik.resetForm();
+        },
+    });
     return (
         <div className="mt-auto px-5 py-3">
             <Form
                 onSubmit={formik.handleSubmit}
-                noValidate=""
                 className="py-1 border rounded-2">
                 <Form.Group className='input-group has-validation'>
                     <Form.Control
                         value={formik.values.body}
                         onChange={formik.handleChange}
-                        aria-label='Новое сообщение'
+                        aria-label={t('messages.new')}
                         className='border-0 p-0 ps-2 form-control'
                         name='body'
                         ref={inputEl}
                         autoFocus
-                        placeholder='Введите сообщение...'
+                        disabled={formik.isSubmitting}
+                        placeholder={t('messages.input')}
                         autoComplete='off' />
-                    <button type="submit" disabled="" className="btn btn-group-vertical">
-                        <ArrowRight />
-                        <span className="visually-hidden">Отправить</span>
-                    </button>
+                    <Form.Label className='visually-hidden' role="label"></Form.Label>
+                    <Button
+                        type="submit"
+                        disabled={!formik.values.body}
+                        className="btn btn-group-vertical">
+                        {formik.isSubmitting
+                            ? <CustomSpinner size="sm" />
+                            : <ArrowRight />
+                        }
+                        <span className="visually-hidden">
+                            {t('messages.send')}
+                        </span>
+                    </Button>
                 </Form.Group>
             </Form>
         </div>
     )
 }
 
-export default MessagesForm
+export default MessagesForm;
