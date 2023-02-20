@@ -1,13 +1,14 @@
+import { useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Form, Button, Modal } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import leoProfanity from 'leo-profanity';
-import { useRef, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import notification from '../../utils/notify';
 import { useTranslation } from 'react-i18next'
+import notification from '../../utils/notify';
 import { hideModal } from '../../store/slices/modalsSlice';
 import useSocket from '../../hooks/useSocket.hook';
+import leoProfanity from 'leo-profanity';
+import ErrorMessage from '../ErrorMessage';
 
 const RenameModal = () => {
     const channels = useSelector(state => state.channels.channels);
@@ -62,21 +63,29 @@ const RenameModal = () => {
                                 type="text"
                                 autoFocus
                                 autoComplete='off'
+                                isInvalid={formik.errors.name && formik.touched.name}
                             />
+                            <Form.Label className='visually-hidden'>
+                                {t('renameModal.name')}
+                            </Form.Label>
                             {
-                                formik.errors.name &&
-                                <p className='feedback text-danger'>{formik.errors.name}</p>
+                                formik.errors.name
+                                && formik.touched.name
+                                && <ErrorMessage message={formik.errors.name} />
                             }
                         </Form.Group>
                         <div>
                             <Button
                                 className='m-1'
+                                role="cancel"
                                 variant="secondary" onClick={() => dispatch(hideModal())}>
                                 {t('renameModal.cancel')}
                             </Button>
                             <Button
                                 className='m-1'
-                                variant="primary" type='submit'>
+                                variant="primary"
+                                role="submit"
+                                type='submit'>
                                 {t('renameModal.send')}
                             </Button>
                         </div>
