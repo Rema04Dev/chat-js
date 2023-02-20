@@ -9,7 +9,7 @@ import axios from 'axios';
 import routes from '../../utils/routes'
 import ErrorMessage from '../ErrorMessage';
 import { useTranslation } from 'react-i18next';
-
+import CustomSpinner from '../skeletons/CustomSpinner';
 const LoginPage = () => {
     const [errorMessage, setErrorMessage] = useState(null);
     const navigate = useNavigate();
@@ -62,6 +62,7 @@ const LoginPage = () => {
                                     type="text"
                                     id="floatingLogin"
                                     name="username"
+                                    disabled={formik.isSubmitting}
                                     placeholder={t('login.username')}
                                     autoComplete='off'
                                     className={formik.errors.username && formik.touched.username ? 'is-invalid' : ''} />
@@ -81,6 +82,7 @@ const LoginPage = () => {
                                     id="floatingPassword"
                                     name="password"
                                     autoComplete='off'
+                                    disabled={formik.isSubmitting}
                                     placeholder={t('login.password')}
                                     className={formik.errors.password && formik.touched.password ? 'is-invalid' : ''} />
                                 <Form.Label htmlFor='floatingPassword'>{t('login.password')}</Form.Label>
@@ -93,9 +95,17 @@ const LoginPage = () => {
                                 </Form.Text>
                                 <ErrorMessage message={errorMessage} />
                             </Form.Group>
-                            <Button variant="primary" type="submit">{t('login.submit')}</Button>
+                            <Button
+                                disabled={formik.isSubmitting}
+                                variant="primary"
+                                type="submit">
+                                {formik.isSubmitting && <CustomSpinner size="sm" />}
+                                {t('login.submit')}
+                            </Button>
                         </Form>
-                        <p className='mt-3'>{t('login.hasAccount')} <Link to="/signup">{t('signup.title')}</Link></p>
+                        <p className='mt-3'>{t('login.hasAccount')}
+                            <Link to="/signup">{t('signup.title')}</Link>
+                        </p>
                     </Col>
                 </Row>
             </Container>
