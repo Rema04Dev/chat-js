@@ -2,22 +2,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { hideModal } from '../../store/slices/modalsSlice';
-// import { setCurrentChannelId } from '../../store/slices/channelsSlice'
 import useSocket from '../../hooks/useSocket.hook';
 import notification from '../../utils/notify';
 
 const RemoveModal = () => {
     const dispatch = useDispatch();
     const channelId = useSelector(state => state.modals.channelId);
-    // const { currentChannelId } = useSelector(state => state.channels);
     const { removeChannel } = useSocket();
     const { t } = useTranslation();
 
     const handleRemove = () => {
         removeChannel(channelId);
-        // if (currentChannelId === channelId) {
-        //     dispatch(setCurrentChannelId(1));
-        // }
         notification.remove(t('removeModal.success'));
         dispatch(hideModal());
     };
