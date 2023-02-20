@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Form, Button, Container, Row, Col, Spinner } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
