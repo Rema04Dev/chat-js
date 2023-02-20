@@ -8,6 +8,7 @@ import { hideModal } from '../../store/slices/modalsSlice';
 import notification from '../../utils/notify';
 import { useTranslation } from 'react-i18next';
 import useSocket from '../../hooks/useSocket.hook';
+import ErrorMessage from '../ErrorMessage';
 
 const AddModal = () => {
     const channels = useSelector(state => state.channels.channels);
@@ -57,24 +58,32 @@ const AddModal = () => {
                             <Form.Control
                                 value={formik.values.name}
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 ref={inputEl}
                                 aria-label={t('addModal.addChannel')}
                                 name="name"
                                 type="text"
                                 autoFocus
                                 autoComplete='off'
+                                isInvalid={formik.errors.name && formik.touched.name}
                             />
                             {
-                                formik.errors.name &&
-                                <p className='feedback text-danger'>{formik.errors.name}</p>
+                                formik.errors.name
+                                && formik.touched.name
+                                && < ErrorMessage message={formik.errors.name} />
                             }
+                            <Form.Label className='visually-hidden' role="label">
+                                {t('addModal.addChannel')}
+                            </Form.Label>
                         </Form.Group>
                         <Button
+                            role="cancel"
                             className='m-1'
                             variant="secondary" onClick={() => dispatch(hideModal())}>
                             {t('addModal.cancel')}
                         </Button>
                         <Button
+                            role="submit"
                             className='m-1'
                             variant="primary" type='submit'>
                             {t('addModal.send')}

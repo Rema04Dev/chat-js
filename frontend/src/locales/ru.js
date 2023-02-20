@@ -77,7 +77,7 @@ const ru = {
             remove: 'Удалить',
         },
         errors: {
-            network: 'Ошибка сети'
+            network: 'Ошибка соединения'
         }
     }
 };

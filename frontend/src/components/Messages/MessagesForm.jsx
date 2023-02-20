@@ -59,7 +59,9 @@ const MessagesForm = () => {
                         disabled={formik.isSubmitting}
                         placeholder={t('messages.input')}
                         autoComplete='off' />
-                    <Form.Label className='visually-hidden' role="label"></Form.Label>
+                    <Form.Label className='visually-hidden' role="label">
+                        {t('messages.new')}
+                    </Form.Label>
                     <Button
                         type="submit"
                         disabled={!formik.values.body}
