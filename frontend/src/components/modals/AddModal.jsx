@@ -59,7 +59,6 @@ const AddModal = () => {
                             <Form.Control
                                 value={formik.values.name}
                                 onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
                                 ref={inputEl}
                                 aria-label={t('addModal.addChannel')}
                                 name="name"
