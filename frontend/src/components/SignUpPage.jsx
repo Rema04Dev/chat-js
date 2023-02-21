@@ -5,10 +5,10 @@ import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import routes from '../utils/routes';
 import AuthContext from '../contexts/AuthContext';
 import ErrorMessage from './ErrorMessage';
 import CustomSpinner from './skeletons/CustomSpinner';
+import routes from '../utils/routes';
 
 const SignUpPage = () => {
     const { t } = useTranslation();

@@ -1,8 +1,9 @@
-import { io } from 'socket.io-client';
+import { useDispatch } from 'react-redux';
 import SocketContext from '../contexts/SocketContext';
 import { actions } from '../store/slices/messagesSlice';
 import * as channelsActions from '../store/slices/channelsSlice';
-import { useDispatch } from 'react-redux';
+import { io } from 'socket.io-client';
+
 const SocketProvider = ({ children }) => {
     const socket = io();
     const dispatch = useDispatch();

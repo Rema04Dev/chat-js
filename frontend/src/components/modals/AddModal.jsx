@@ -1,10 +1,9 @@
 import { useRef, useEffect } from 'react';
-
-import { Form, Button, Modal } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
+import { Form, Button, Modal } from 'react-bootstrap';
 import * as Yup from 'yup';
 import leoProfanity from 'leo-profanity';
-import { useSelector, useDispatch } from 'react-redux';
 import { hideModal } from '../../store/slices/modalsSlice';
 import notification from '../../utils/notify';
 import { useTranslation } from 'react-i18next';

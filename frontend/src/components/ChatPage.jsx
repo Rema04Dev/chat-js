@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Spinner } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
+import fetchData from '../store/slices/fetchData';
 import Channels from './Channels/Channels';
 import Messages from './Messages/Messages';
-import fetchData from '../store/slices/fetchData';
 import useAuth from '../hooks/useAuth.hook.js';
 import getModal from './modals/index';
 

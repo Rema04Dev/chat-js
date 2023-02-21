@@ -1,7 +1,7 @@
 import { Navbar, Container, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import useAuth from '../hooks/useAuth.hook';
 import { useTranslation } from 'react-i18next';
+import useAuth from '../hooks/useAuth.hook';
 const ChatHeader = () => {
     const { logOut, user } = useAuth();
     const { t } = useTranslation();
