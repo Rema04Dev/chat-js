@@ -3,13 +3,13 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useContext } from 'react';
-import AuthContext from '../../contexts/AuthContext';
+import AuthContext from '../contexts/AuthContext';
 import * as Yup from 'yup';
 import axios from 'axios';
-import routes from '../../utils/routes'
-import ErrorMessage from '../ErrorMessage';
+import routes from '../utils/routes'
+import ErrorMessage from './ErrorMessage';
 import { useTranslation } from 'react-i18next';
-import CustomSpinner from '../skeletons/CustomSpinner';
+import CustomSpinner from './skeletons/CustomSpinner';
 const LoginPage = () => {
     const [errorMessage, setErrorMessage] = useState(null);
     const navigate = useNavigate();

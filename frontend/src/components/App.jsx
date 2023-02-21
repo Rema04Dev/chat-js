@@ -1,8 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
-import { MainPage, LoginPage, SignUpPage, NotFoundPage } from './pages'
+import ChatPage from './ChatPage';
+import LoginPage from './LoginPage';
+import SignUpPage from './SignUpPage';
+import NotFoundPage from './NotFoundPage';
+import ChatHeader from './ChatHeader.jsx';
 import PrivateRoute from './PrivateRoute';
 import AuthProvider from './AuthProvider';
-import ChatHeader from './ChatHeader.jsx';
+
 const App = () => {
     return (
         <>
@@ -10,7 +14,7 @@ const App = () => {
                 <ChatHeader />
                 <Routes>
                     <Route element={<PrivateRoute />}>
-                        <Route path='/' element={<MainPage />} />
+                        <Route path='/' element={<ChatPage />} />
                     </Route>
                     <Route path='/login' element={<LoginPage />} />
                     <Route path='/signup' element={<SignUpPage />} />

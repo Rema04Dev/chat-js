@@ -18,8 +18,8 @@ const MessagesForm = () => {
     const { t } = useTranslation();
 
     useEffect(() => {
-        inputEl.current.select();
-    }, [currentChannelId, addMessage]);
+        inputEl.current.focus();
+    });
 
     const formik = useFormik({
         initialValues: {
@@ -42,6 +42,7 @@ const MessagesForm = () => {
             formik.resetForm();
         },
     });
+
     return (
         <div className="mt-auto px-5 py-3">
             <Form

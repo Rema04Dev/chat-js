@@ -1,6 +1,5 @@
-import { Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-
+import { Col } from 'react-bootstrap';
 import MessagesHeader from './MessagesHeader';
 import MessagesBox from './MessagesBox';
 import MessagesForm from './MessagesForm';

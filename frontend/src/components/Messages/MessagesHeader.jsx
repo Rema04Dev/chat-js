@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import MessagesHeaderSkeleton from '../skeletons/MessagesHeaderSkeleton.jsx';
+import MessagesHeaderSkeleton from '../skeletons/MessagesHeaderSkeleton.jsx.jsx';
 
 const MessagesHeader = ({ currentMessages, currentChannel }) => {
     const { t } = useTranslation();
