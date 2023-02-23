@@ -46,12 +46,6 @@
       "last 1 safari version"
     ]
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "devDependencies": {
     "eslint": "^8.23.0",
     "eslint-config-airbnb": "^19.0.4",
