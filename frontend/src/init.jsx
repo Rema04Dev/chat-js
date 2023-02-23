@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './components/App';
 import resources from './locales/index.js';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
+import Rollbar from 'rollbar';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import SocketProvider from './components/SocketProvider';
@@ -23,8 +24,17 @@ const init = async () => {
   leoProfanity.add(leoProfanity.getDictionary('ru'));
   leoProfanity.add(leoProfanity.getDictionary('en'));
 
+  const rollbarConfig = {
+    accessToken: 'REACT_APP_ROLLBAR',
+    environment: 'production',
+  };
+  
+  const rollbar = new Rollbar(rollbarConfig);
+
+
+
   return (
-    <RollbarProvider>
+    <RollbarProvider config={rollbar}>
       <ErrorBoundary>
         <I18nextProvider i18n={i18n}>
           <BrowserRouter>

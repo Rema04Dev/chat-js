@@ -12,7 +12,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@hexlet/chat-server": "^1.1.6",
-    "@rollbar/react": "^0.11.1"
+    "@hexlet/chat-server": "^1.1.6"
   }
 }
