@@ -1,4 +1,4 @@
-// eslint-disable no-param-reassign
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 import { removeChannel } from './channelsSlice';
 import fetchData from './fetchData';

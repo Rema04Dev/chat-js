@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -5,7 +6,6 @@ const initialState = {
   channelId: null,
 };
 
-// eslint-disable no-param-reassign
 const modalsSlice = createSlice({
   name: 'modals',
   initialState,
