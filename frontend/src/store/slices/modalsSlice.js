@@ -5,6 +5,7 @@ const initialState = {
   channelId: null,
 };
 
+// eslint-disable no-param-reassign
 const modalsSlice = createSlice({
   name: 'modals',
   initialState,
