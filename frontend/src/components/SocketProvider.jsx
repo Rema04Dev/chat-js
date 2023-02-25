@@ -54,8 +54,10 @@ const SocketProvider = ({ children }) => {
       }
     });
   };
+
   const socketValue = useMemo(() => ({
     addMessage, addChannel, renameChannel, removeChannel,
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }), []);
 
   return (

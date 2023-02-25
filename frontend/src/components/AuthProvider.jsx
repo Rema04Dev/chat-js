@@ -1,4 +1,6 @@
-import { useState, useCallback, useMemo } from 'react';
+import {
+  useState, useCallback, useMemo,
+} from 'react';
 import AuthContext from '../contexts/AuthContext';
 
 const AuthProvider = ({ children }) => {
@@ -15,6 +17,7 @@ const AuthProvider = ({ children }) => {
     setUser(null);
   }, []);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getAuthHeaders = () => ({
     headers: { Authorization: `Bearer ${user.token}` },
   });
@@ -24,7 +27,7 @@ const AuthProvider = ({ children }) => {
   // }), [user.token]);
 
   // const getAuthHeaders = useCallback(() => ({
-  //   headers: { Authorization: `Bearer ${user.token}` },
+  // headers: { Authorization: `Bearer ${user.token}` },
   // }), [user.token]);
 
   const authValue = useMemo(() => ({
