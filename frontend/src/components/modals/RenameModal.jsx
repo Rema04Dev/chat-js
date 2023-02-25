@@ -46,7 +46,7 @@ const RenameModal = () => {
   return (
     <Modal show>
       <Modal.Header closeButton onHide={() => dispatch(hideModal())}>
-        <Modal.Title>{t('renameModal.name')}</Modal.Title>
+        <Modal.Title>{t('renameModal.renameChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
@@ -69,10 +69,10 @@ const RenameModal = () => {
               {t('renameModal.name')}
             </Form.Label>
             {
-                                formik.errors.name
-                                && formik.touched.name
-                                && <ErrorMessage message={formik.errors.name} />
-                            }
+              formik.errors.name
+              && formik.touched.name
+              && <ErrorMessage message={formik.errors.name} />
+            }
           </Form.Group>
           <div>
             <Button

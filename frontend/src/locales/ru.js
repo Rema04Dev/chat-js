@@ -61,6 +61,7 @@ const ru = {
     },
     renameModal: {
       success: 'Канал переименован',
+      renameChannel: 'Переименовать канал',
       name: 'Имя канала',
       cancel: 'Отменить',
       send: 'Отправить',
