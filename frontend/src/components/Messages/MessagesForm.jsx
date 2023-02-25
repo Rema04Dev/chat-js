@@ -62,7 +62,7 @@ const MessagesForm = () => {
             placeholder={t('messages.input')}
             autoComplete="off"
           />
-          <Form.Label className="visually-hidden" role="label">
+          <Form.Label className="visually-hidden">
             {t('messages.new')}
           </Form.Label>
           <Button
