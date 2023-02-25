@@ -45,7 +45,7 @@ const Channels = () => {
               </button>
 
               <Dropdown.Toggle split variant="outline-secondary" id="dropdown-split-basic" />
-
+              <span className="visually-hidden">{t('renameModal.handlingChannel')}</span>
               <Dropdown.Menu>
                 <Dropdown.Item
                   onClick={() => dispatch(showModal({ modalType: 'renaming', channelId: id }))}

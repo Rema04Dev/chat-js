@@ -64,6 +64,7 @@ const ru = {
       name: 'Имя канала',
       cancel: 'Отменить',
       send: 'Отправить',
+      handlingChannel: 'Управление каналом',
       validation: {
         length: 'От 3 до 20 символов',
         unique: 'Должно быть уникальным',
