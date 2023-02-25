@@ -58,7 +58,6 @@ const AddModal = () => {
               value={formik.values.name}
               onChange={formik.handleChange}
               ref={inputEl}
-              aria-label={t('addModal.addChannel')}
               name="name"
               type="text"
               autoFocus
@@ -66,12 +65,12 @@ const AddModal = () => {
               isInvalid={formik.errors.name && formik.touched.name}
             />
             {
-                                formik.errors.name
-                                && formik.touched.name
-                                && <ErrorMessage message={formik.errors.name} />
-                            }
+              formik.errors.name
+              && formik.touched.name
+              && <ErrorMessage message={formik.errors.name} />
+            }
             <Form.Label className="visually-hidden">
-              {t('addModal.addChannel')}
+              {t('addModal.channelName')}
             </Form.Label>
           </Form.Group>
           <Button

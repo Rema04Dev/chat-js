@@ -52,6 +52,7 @@ const ru = {
       send: 'Отправить',
       success: 'Канал создан',
       addChannel: 'Добавить канал',
+      channelName: 'Имя канала',
       validation: {
         length: 'От 3 до 20 символов',
         unique: 'Должно быть уникальным',
