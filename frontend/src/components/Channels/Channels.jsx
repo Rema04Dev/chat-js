@@ -73,6 +73,7 @@ const Channels = () => {
         <span>{t('channels.title')}</span>
         <button type="button" className="p-0 text-primary btn btn-group-vertical">
           <Plus onClick={() => dispatch(showModal({ modalType: 'adding', channelId: null }))} />
+          <span className="visually-hidden">+</span>
         </button>
       </div>
       <ul className="nav flex-column nav-pills nav-fill px-2">
