@@ -20,14 +20,19 @@ const SocketProvider = ({ children, socket }) => {
     dispatch(channelsActions.removeChannel(channelId));
   });
 
-  const addMessage = (message) => {
-    socket.emit('newMessage', message, (response) => {
-      if (response.status === 'ok') {
-        console.log(response.status);
-      }
+  // const addMessage = (message) => {
+  //   socket.emit('newMessage', message, (response) => {
+  //     if (response.status === 'ok') {
+  //       console.log(response.status);
+  //     }
+  //   });
+  // };
+  const addMessage = (message) => new Promise((resolve, reject) => {
+    socket.emit('newMessage', message, (err, response) => {
+      if (response.status === 'ok') resolve(response.data);
+      reject(new Error('Oops'));
     });
-  };
-
+  });
   const addChannel = (channel) => {
     socket.emit('newChannel', channel, (response) => {
       if (response.status === 'ok') {

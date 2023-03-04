@@ -30,7 +30,7 @@ const MessagesForm = () => {
         .string()
         .required(),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const { body } = values;
       const cleanedMessage = leoProfanity.clean(body);
       const messageData = {
@@ -38,8 +38,12 @@ const MessagesForm = () => {
         channelId: currentChannelId,
         username: user.username,
       };
-      addMessage(messageData);
-      formik.resetForm();
+      try {
+        await addMessage(messageData);
+        formik.resetForm();
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
 
