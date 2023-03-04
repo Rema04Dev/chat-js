@@ -1,12 +1,12 @@
 import { useDispatch } from 'react-redux';
-import { io } from 'socket.io-client';
+// import { io } from 'socket.io-client';
 import { useMemo } from 'react';
 import SocketContext from '../contexts/SocketContext';
 import { actions } from '../store/slices/messagesSlice';
 import * as channelsActions from '../store/slices/channelsSlice';
 
-const SocketProvider = ({ children }) => {
-  const socket = io();
+const SocketProvider = ({ children, socket }) => {
+  // const socket = io();
   const dispatch = useDispatch();
 
   socket.on('newMessage', (message) => {

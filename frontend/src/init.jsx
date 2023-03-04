@@ -10,7 +10,7 @@ import App from './components/App';
 import store from './store/store';
 import SocketProvider from './components/SocketProvider';
 
-const init = async () => {
+const init = async (socket) => {
   const i18n = i18next.createInstance();
 
   await i18n
@@ -25,7 +25,7 @@ const init = async () => {
   leoProfanity.add(leoProfanity.getDictionary('en'));
 
   const rollbarConfig = {
-    accessToken: 'REACT_APP_ROLLBAR',
+    accessToken: process.env.REACT_APP_ROLLBAR,
     environment: 'production',
   };
 
@@ -37,7 +37,7 @@ const init = async () => {
         <I18nextProvider i18n={i18n}>
           <BrowserRouter>
             <Provider store={store}>
-              <SocketProvider>
+              <SocketProvider socket={socket}>
                 <App />
               </SocketProvider>
             </Provider>
