@@ -34,13 +34,13 @@ const AddModal = () => {
         .required(t('addModal.validation.required')),
     }),
 
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const cleanedName = leoProfanity.clean(values.name);
       const channelData = {
         name: cleanedName,
         removable: true,
       };
-      addChannel(channelData);
+      await addChannel(channelData);
       dispatch(hideModal());
       notification.add(t('addModal.success'));
     },
