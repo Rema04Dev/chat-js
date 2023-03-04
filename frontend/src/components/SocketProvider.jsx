@@ -30,17 +30,28 @@ const SocketProvider = ({ children, socket }) => {
   const addMessage = (message) => new Promise((resolve, reject) => {
     socket.emit('newMessage', message, (err, response) => {
       if (response.status === 'ok') resolve(response.data);
-      reject(new Error('Oops'));
+      reject(err);
     });
   });
-  const addChannel = (channel) => {
-    socket.emit('newChannel', channel, (response) => {
+
+  // const addChannel = (channel) => {
+  //   socket.emit('newChannel', channel, (response) => {
+  //     if (response.status === 'ok') {
+  //       const { id } = response.data;
+  //       dispatch(channelsActions.setCurrentChannelId(id));
+  //     }
+  //   });
+  // };
+
+  const addChannel = (channel) => new Promise((resolve, reject) => {
+    socket.emit('newChannel', channel, (err, response) => {
       if (response.status === 'ok') {
         const { id } = response.data;
-        dispatch(channelsActions.setCurrentChannelId(id));
+        resolve(dispatch(channelsActions.setCurrentChannelId(id)));
       }
+      reject(err);
     });
-  };
+  });
 
   const renameChannel = (channelName) => {
     socket.emit('renameChannel', channelName, (response) => {

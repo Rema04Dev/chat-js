@@ -40,9 +40,13 @@ const AddModal = () => {
         name: cleanedName,
         removable: true,
       };
-      await addChannel(channelData);
-      dispatch(hideModal());
-      notification.add(t('addModal.success'));
+      try {
+        await addChannel(channelData);
+        notification.add(t('addModal.success'));
+        dispatch(hideModal());
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
 
