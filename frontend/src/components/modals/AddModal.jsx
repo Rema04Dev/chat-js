@@ -16,7 +16,7 @@ const AddModal = () => {
   const channels = useSelector((state) => state.channels.channels);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { addChannel } = useSocket();
+  const { socketApi } = useSocket();
   const inputEl = useRef();
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const AddModal = () => {
       };
 
       try {
-        const response = addChannel(channelData);
+        const response = socketApi.addChannel(channelData);
         dispatch(channelsActions.setCurrentChannelId(response.id));
         dispatch(hideModal());
         notification.add(t('addModal.success'));

@@ -8,11 +8,11 @@ import notification from '../../utils/notify';
 const RemoveModal = () => {
   const dispatch = useDispatch();
   const channelId = useSelector((state) => state.modals.channelId);
-  const { removeChannel } = useSocket();
+  const { socketApi } = useSocket();
   const { t } = useTranslation();
 
-  const handleRemove = () => {
-    removeChannel(channelId);
+  const handleRemove = async () => {
+    await socketApi.removeChannel({ id: channelId });
     notification.remove(t('removeModal.success'));
     dispatch(hideModal());
   };

@@ -15,7 +15,7 @@ const RenameModal = () => {
   const channelId = useSelector((state) => state.modals.channelId);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { renameChannel } = useSocket();
+  const { socketApi } = useSocket();
   const inputEl = useRef();
 
   useEffect(() => {
@@ -35,11 +35,15 @@ const RenameModal = () => {
         .required(t('renameModal.validation.required')),
     }),
 
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const cleanedName = leoProfanity.clean(values.name);
-      renameChannel({ id: channelId, name: cleanedName });
-      dispatch(hideModal());
-      notification.rename(t('renameModal.success'));
+      try {
+        await socketApi.renameChannel({ id: channelId, name: cleanedName });
+        dispatch(hideModal());
+        notification.rename(t('renameModal.success'));
+      } catch (err) {
+        notification.error('oops');
+      }
     },
   });
 
