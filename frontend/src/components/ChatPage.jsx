@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Container, Row, Spinner } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
 import fetchData from '../store/slices/fetchData';
@@ -10,8 +11,8 @@ import getModal from './modals/index';
 
 const MainPage = () => {
   const loading = useSelector((state) => state.channels.loading);
-  const [error, setError] = useState(null);
   const { getAuthHeaders } = useAuth();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const modalType = useSelector((state) => state.modals.modalType);
   const renderModal = (type) => {
@@ -23,16 +24,17 @@ const MainPage = () => {
   };
   useEffect(() => {
     const getData = async () => {
-      try {
-        const headers = getAuthHeaders();
-        await dispatch(fetchData(headers));
-      } catch (e) {
-        setError('server error');
-        console.log(error);
-      }
+      const headers = getAuthHeaders();
+      dispatch(fetchData(headers))
+        .unwrap()
+        .catch(({ status }) => {
+          if (status === 401) {
+            navigate('/login');
+          }
+        });
     };
     getData();
-  }, [dispatch, getAuthHeaders, error]);
+  }, [dispatch, getAuthHeaders, navigate]);
 
   if (loading) {
     return (
