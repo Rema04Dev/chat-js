@@ -12,9 +12,14 @@ const RemoveModal = () => {
   const { t } = useTranslation();
 
   const handleRemove = async () => {
-    await socketApi.removeChannel({ id: channelId });
-    notification.remove(t('removeModal.success'));
-    dispatch(hideModal());
+    try {
+      await socketApi.removeChannel({ id: channelId });
+      notification.remove(t('removeModal.success'));
+      dispatch(hideModal());
+    } catch (err) {
+      console.error(err);
+      notification.error('oops');
+    }
   };
 
   return (

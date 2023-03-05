@@ -5,6 +5,7 @@ import fetchData from './fetchData';
 const initialState = {
   channels: [],
   currentChannelId: 1,
+  loading: false,
 };
 
 const channelsSlice = createSlice({
@@ -33,10 +34,14 @@ const channelsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchData.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(fetchData.fulfilled, (state, action) => {
         const { channels, currentChannelId } = action.payload;
         state.channels = channels;
         state.currentChannelId = currentChannelId;
+        state.loading = false;
       });
   },
 });

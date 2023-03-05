@@ -9,7 +9,7 @@ import useAuth from '../hooks/useAuth.hook.js';
 import getModal from './modals/index';
 
 const MainPage = () => {
-  const [loading, setLoading] = useState(true);
+  const loading = useSelector((state) => state.channels.loading);
   const [error, setError] = useState(null);
   const { getAuthHeaders } = useAuth();
   const dispatch = useDispatch();
@@ -23,11 +23,9 @@ const MainPage = () => {
   };
   useEffect(() => {
     const getData = async () => {
-      setLoading(true);
       try {
         const headers = getAuthHeaders();
         await dispatch(fetchData(headers));
-        setLoading(false);
       } catch (e) {
         setError('server error');
         console.log(error);
