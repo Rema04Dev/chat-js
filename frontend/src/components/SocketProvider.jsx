@@ -1,14 +1,14 @@
 import { useDispatch } from 'react-redux';
 import { useMemo } from 'react';
 import SocketContext from '../contexts/SocketContext';
-import { actions } from '../store/slices/messagesSlice';
+import * as messagesActions from '../store/slices/messagesSlice';
 import * as channelsActions from '../store/slices/channelsSlice';
 
 const SocketProvider = ({ children, socket }) => {
   const dispatch = useDispatch();
 
   socket.on('newMessage', (message) => {
-    dispatch(actions.addMessage(message));
+    dispatch(messagesActions.addMessage(message));
   });
   socket.on('newChannel', (channel) => {
     dispatch(channelsActions.addChannel(channel));
@@ -20,22 +20,19 @@ const SocketProvider = ({ children, socket }) => {
     dispatch(channelsActions.removeChannel(channelId));
   });
 
-  // const addMessage = (message) => {
-  //   socket.emit('newMessage', message, (response) => {
-  //     if (response.status === 'ok') {
-  //       console.log(response.status);
-  //     }
-  //   });
-  // };
   const addMessage = (message) => new Promise((resolve, reject) => {
     socket.emit('newMessage', message, (err, response) => {
-      if (response.status === 'ok') resolve(response.data);
-      reject(err);
+      if (err) {
+        reject(err);
+      }
+      if (response?.status === 'ok') {
+        resolve(response.data);
+      }
     });
   });
 
   // const addChannel = (channel) => {
-  //   socket.emit('newChannel', channel, (response) => {
+  //   socket.emit('newChannels', channel, (response) => {
   //     if (response.status === 'ok') {
   //       const { id } = response.data;
   //       dispatch(channelsActions.setCurrentChannelId(id));
@@ -45,9 +42,13 @@ const SocketProvider = ({ children, socket }) => {
 
   const addChannel = (channel) => new Promise((resolve, reject) => {
     socket.emit('newChannel', channel, (err, response) => {
-      if (response.status === 'ok') {
-        const { id } = response.data;
-        resolve(dispatch(channelsActions.setCurrentChannelId(id)));
+      if (err) {
+        reject(err);
+      }
+      if (response?.status === 'ok') {
+        // const { id } = response.data;
+        // resolve(dispatch(channelsActions.setCurrentChannelId(id)));
+        resolve(response.data);
       }
       reject(err);
     });

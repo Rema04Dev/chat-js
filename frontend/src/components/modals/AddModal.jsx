@@ -6,6 +6,8 @@ import * as Yup from 'yup';
 import leoProfanity from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
 import { hideModal } from '../../store/slices/modalsSlice';
+import * as channelsActions from '../../store/slices/channelsSlice';
+
 import notification from '../../utils/notify';
 import useSocket from '../../hooks/useSocket.hook';
 import ErrorMessage from '../ErrorMessage';
@@ -41,11 +43,13 @@ const AddModal = () => {
         removable: true,
       };
       try {
-        await addChannel(channelData);
+        const channel = await addChannel(channelData);
+        const { id } = channel;
+        dispatch(channelsActions.setCurrentChannelId(id));
         notification.add(t('addModal.success'));
         dispatch(hideModal());
       } catch (error) {
-        console.error(error);
+        notification.error('oops');
       }
     },
   });
