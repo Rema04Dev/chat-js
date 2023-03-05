@@ -31,26 +31,14 @@ const SocketProvider = ({ children, socket }) => {
     });
   });
 
-  // const addChannel = (channel) => {
-  //   socket.emit('newChannels', channel, (response) => {
-  //     if (response.status === 'ok') {
-  //       const { id } = response.data;
-  //       dispatch(channelsActions.setCurrentChannelId(id));
-  //     }
-  //   });
-  // };
-
   const addChannel = (channel) => new Promise((resolve, reject) => {
     socket.emit('newChannel', channel, (err, response) => {
       if (err) {
         reject(err);
       }
       if (response?.status === 'ok') {
-        // const { id } = response.data;
-        // resolve(dispatch(channelsActions.setCurrentChannelId(id)));
         resolve(response.data);
       }
-      reject(err);
     });
   });
 

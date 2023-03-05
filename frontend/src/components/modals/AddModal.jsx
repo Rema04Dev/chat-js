@@ -42,12 +42,12 @@ const AddModal = () => {
         name: cleanedName,
         removable: true,
       };
+
       try {
-        const channel = await addChannel(channelData);
-        const { id } = channel;
-        dispatch(channelsActions.setCurrentChannelId(id));
-        notification.add(t('addModal.success'));
+        const response = addChannel(channelData);
+        dispatch(channelsActions.setCurrentChannelId(response.id));
         dispatch(hideModal());
+        notification.add(t('addModal.success'));
       } catch (error) {
         notification.error('oops');
       }
