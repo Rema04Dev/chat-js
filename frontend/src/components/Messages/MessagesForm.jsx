@@ -39,7 +39,7 @@ const MessagesForm = () => {
         username: user.username,
       };
       try {
-        socketApi.addMessage(messageData);
+        await socketApi.addMessage(messageData);
         formik.resetForm();
       } catch (error) {
         console.error(error);

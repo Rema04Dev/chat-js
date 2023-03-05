@@ -7,11 +7,8 @@ import * as channelsActions from '../store/slices/channelsSlice';
 const SocketProvider = ({ children, socket }) => {
   const dispatch = useDispatch();
 
-  const promisifySocket = (event, data) => new Promise((resolve, reject) => {
-    socket.emit(event, data, (err, response) => {
-      if (err) {
-        reject(err);
-      }
+  const promisifySocket = (event, data) => new Promise((resolve) => {
+    socket.emit(event, data, (response) => {
       if (response?.status === 'ok') {
         resolve(response.data);
       }
@@ -38,10 +35,7 @@ const SocketProvider = ({ children, socket }) => {
     dispatch(channelsActions.removeChannel(channelId));
   });
 
-  const socketValue = useMemo(() => ({
-    socketApi,
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), []);
+  const socketValue = useMemo(() => ({ socketApi }), []);
 
   return (
     <SocketContext.Provider value={socketValue}>

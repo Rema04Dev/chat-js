@@ -17,18 +17,9 @@ const AuthProvider = ({ children }) => {
     setUser(null);
   }, []);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getAuthHeaders = () => ({
+  const getAuthHeaders = useCallback(() => ({
     headers: { Authorization: `Bearer ${user.token}` },
-  });
-
-  // const getAuthHeaders = useMemo(() => ({
-  // headers: { Authorization: `Bearer ${user.token}` },
-  // }), [user.token]);
-
-  // const getAuthHeaders = useCallback(() => ({
-  // headers: { Authorization: `Bearer ${user.token}` },
-  // }), [user.token]);
+  }), [user]);
 
   const authValue = useMemo(() => ({
     user, logIn, logOut, getAuthHeaders,

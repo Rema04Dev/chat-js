@@ -44,7 +44,7 @@ const AddModal = () => {
       };
 
       try {
-        const response = socketApi.addChannel(channelData);
+        const response = await socketApi.addChannel(channelData);
         dispatch(channelsActions.setCurrentChannelId(response.id));
         dispatch(hideModal());
         notification.add(t('addModal.success'));
