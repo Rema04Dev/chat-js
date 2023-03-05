@@ -11,6 +11,7 @@ import * as channelsActions from '../../store/slices/channelsSlice';
 import notification from '../../utils/notify';
 import useSocket from '../../hooks/useSocket.hook';
 import ErrorMessage from '../ErrorMessage';
+import CustomSpinner from '../skeletons/CustomSpinner';
 
 const AddModal = () => {
   const channels = useSelector((state) => state.channels.channels);
@@ -95,6 +96,9 @@ const AddModal = () => {
             variant="primary"
             type="submit"
           >
+            { formik.isSubmitting
+              ? <CustomSpinner size="sm" />
+              : null }
             {t('addModal.send')}
           </Button>
         </Form>

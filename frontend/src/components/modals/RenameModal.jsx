@@ -9,6 +9,7 @@ import notification from '../../utils/notify';
 import { hideModal } from '../../store/slices/modalsSlice';
 import useSocket from '../../hooks/useSocket.hook';
 import ErrorMessage from '../ErrorMessage';
+import CustomSpinner from '../skeletons/CustomSpinner';
 
 const RenameModal = () => {
   const channels = useSelector((state) => state.channels.channels);
@@ -93,6 +94,7 @@ const RenameModal = () => {
               role="button"
               type="submit"
             >
+              {formik.isSubmitting ? <CustomSpinner size="sm" /> : null}
               {t('renameModal.send')}
             </Button>
           </div>
