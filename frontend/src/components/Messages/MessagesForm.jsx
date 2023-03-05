@@ -12,7 +12,7 @@ import CustomSpinner from '../skeletons/CustomSpinner';
 
 const MessagesForm = () => {
   const { user } = useAuth();
-  const { addMessage } = useSocket();
+  const { socketApi } = useSocket();
   const { currentChannelId } = useSelector((state) => state.channels);
   const inputEl = useRef();
   const { t } = useTranslation();
@@ -39,7 +39,7 @@ const MessagesForm = () => {
         username: user.username,
       };
       try {
-        await addMessage(messageData);
+        socketApi.addMessage(messageData);
         formik.resetForm();
       } catch (error) {
         console.error(error);
