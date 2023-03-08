@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { Container, Row, Spinner } from 'react-bootstrap';
 import { ToastContainer } from 'react-toastify';
 import fetchData from '../store/slices/fetchData';
@@ -11,8 +10,7 @@ import getModal from './modals/index';
 
 const MainPage = () => {
   const loading = useSelector((state) => state.channels.loading);
-  const { getAuthHeaders } = useAuth();
-  const navigate = useNavigate();
+  const { getAuthHeaders, logOut } = useAuth();
   const dispatch = useDispatch();
   const modalType = useSelector((state) => state.modals.modalType);
   const renderModal = (type) => {
@@ -29,12 +27,12 @@ const MainPage = () => {
         .unwrap()
         .catch(({ status }) => {
           if (status === 401) {
-            navigate('/login');
+            logOut();
           }
         });
     };
     getData();
-  }, [dispatch, getAuthHeaders, navigate]);
+  }, [dispatch, getAuthHeaders, logOut]);
 
   if (loading) {
     return (
