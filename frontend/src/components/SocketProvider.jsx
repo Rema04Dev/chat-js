@@ -7,8 +7,11 @@ import * as channelsActions from '../store/slices/channelsSlice';
 const SocketProvider = ({ children, socket }) => {
   const dispatch = useDispatch();
 
-  const promisifySocket = (event, data) => new Promise((resolve) => {
-    socket.emit(event, data, (response) => {
+  const promisifySocket = (event, data) => new Promise((resolve, reject) => {
+    socket.timeout(5000).emit(event, data, (err, response) => {
+      if (err) {
+        reject(err);
+      }
       if (response?.status === 'ok') {
         resolve(response.data);
       }
