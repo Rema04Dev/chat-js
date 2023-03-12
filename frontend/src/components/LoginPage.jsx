@@ -33,7 +33,8 @@ const LoginPage = () => {
         logIn({ ...response.data });
         navigate('/');
       } catch (e) {
-        const message = e.response.statusText === 'Unauthorized' ? t('login.validation.failed') : 'Неизвестная ошибка';
+        const message = e.response.statusText === 'Unauthorized'
+          ? t('login.validation.failed') : t('errors.unknown');
         setErrorMessage(message);
         throw e;
       }
