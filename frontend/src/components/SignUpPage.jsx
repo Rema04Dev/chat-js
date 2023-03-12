@@ -11,13 +11,10 @@ import AuthContext from '../contexts/AuthContext';
 import ErrorMessage from './ErrorMessage';
 import CustomSpinner from './skeletons/CustomSpinner';
 import routes from '../utils/routes';
-// import { useRollbar } from '@rollbar/react';
 
 const SignUpPage = () => {
   const { t } = useTranslation();
-  // const rollbar = useRollbar(); // <-- must have parent Provider
   const [signUpError, setSignUpError] = useState(null);
-  // const [isSubmitting, SetisSubmitting] = useState(false);
 
   const navigate = useNavigate();
   const { logIn } = useContext(AuthContext);
@@ -51,16 +48,13 @@ const SignUpPage = () => {
       };
 
       try {
-        // SetisSubmitting(true);
         const response = await axios.post(routes.signupPath(), userData);
         logIn({ ...response.data });
         navigate('/');
       } catch (e) {
-        // rollbar.error('MESSAGE FROM ROLLBAR')
         const { status } = e.response;
         const message = status === 409 ? t('signup.validation.alreadyExists') : t('errors.network');
         setSignUpError(message);
-        // SetisSubmitting(false);
         throw e;
       }
     },
