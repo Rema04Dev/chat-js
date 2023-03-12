@@ -30,7 +30,7 @@ const LoginPage = () => {
       };
       try {
         const response = await axios.post(routes.loginPath(), userData);
-        logIn({ ...response.data });
+        logIn(response.data);
         navigate('/');
       } catch (e) {
         const message = e.response.statusText === 'Unauthorized'
