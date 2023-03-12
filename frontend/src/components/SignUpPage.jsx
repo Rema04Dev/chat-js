@@ -53,7 +53,7 @@ const SignUpPage = () => {
         navigate('/');
       } catch (e) {
         const { status } = e.response;
-        const message = status === 409 ? t('signup.validation.alreadyExists') : t('errors.network');
+        const message = status === 409 ? t('signup.validation.alreadyExists') : t('errors.unknown');
         setSignUpError(message);
         throw e;
       }

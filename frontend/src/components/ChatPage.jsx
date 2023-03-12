@@ -8,7 +8,7 @@ import Messages from './Messages/Messages';
 import useAuth from '../hooks/useAuth.hook.js';
 import getModal from './modals/index';
 
-const MainPage = () => {
+const ChatPage = () => {
   const loading = useSelector((state) => state.channels.loading);
   const { getAuthHeaders, logOut } = useAuth();
   const dispatch = useDispatch();
@@ -37,7 +37,12 @@ const MainPage = () => {
   if (loading) {
     return (
       <div className="d-flex justify-content-center align-items-center h-100">
-        <Spinner animation="border" variant="primary" style={{ width: '5rem', height: '5rem' }} className="justify-self-center lg" />
+        <Spinner
+          animation="border"
+          variant="primary"
+          style={{ width: '5rem', height: '5rem' }}
+          className="justify-self-center lg"
+        />
       </div>
     );
   }
@@ -66,4 +71,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default ChatPage;
