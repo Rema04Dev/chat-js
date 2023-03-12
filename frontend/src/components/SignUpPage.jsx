@@ -17,7 +17,7 @@ const SignUpPage = () => {
   const { t } = useTranslation();
   // const rollbar = useRollbar(); // <-- must have parent Provider
   const [signUpError, setSignUpError] = useState(null);
-  const [isSubmitting, SetisSubmitting] = useState(false);
+  // const [isSubmitting, SetisSubmitting] = useState(false);
 
   const navigate = useNavigate();
   const { logIn } = useContext(AuthContext);
@@ -51,7 +51,7 @@ const SignUpPage = () => {
       };
 
       try {
-        SetisSubmitting(true);
+        // SetisSubmitting(true);
         const response = await axios.post(routes.signupPath(), userData);
         logIn({ ...response.data });
         navigate('/');
@@ -60,7 +60,7 @@ const SignUpPage = () => {
         const { status } = e.response;
         const message = status === 409 ? t('signup.validation.alreadyExists') : t('errors.network');
         setSignUpError(message);
-        SetisSubmitting(false);
+        // SetisSubmitting(false);
         throw e;
       }
     },
@@ -86,10 +86,10 @@ const SignUpPage = () => {
               />
               <Form.Label htmlFor="floatingLogin">{t('signup.username')}</Form.Label>
               {
-                                formik.errors.username
-                                && formik.touched.username
-                                && <ErrorMessage message={formik.errors.username} />
-                            }
+                formik.errors.username
+                && formik.touched.username
+                && <ErrorMessage message={formik.errors.username} />
+              }
             </Form.Group>
             <Form.Group className="mb-3 form-floating">
               <Form.Control
@@ -106,10 +106,10 @@ const SignUpPage = () => {
               <Form.Label htmlFor="floatingPassword">{t('signup.password')}</Form.Label>
               <Form.Text className="text-danger">
                 {
-                                    formik.errors.password
-                                    && formik.touched.password
-                                    && <ErrorMessage message={formik.errors.password} />
-                                }
+                  formik.errors.password
+                  && formik.touched.password
+                  && <ErrorMessage message={formik.errors.password} />
+                }
               </Form.Text>
             </Form.Group>
             <Form.Group className="mb-3 form-floating">
@@ -120,18 +120,18 @@ const SignUpPage = () => {
                 id="floatingConfirmPassword"
                 name="confirmPassword"
                 autoComplete="off"
-                disabled={isSubmitting}
+                disabled={formik.isSubmitting}
                 placeholder={t('signup.confirmPassword')}
                 isInvalid={formik.errors.confirmPassword && formik.touched.confirmPassword}
               />
               <Form.Label htmlFor="floatingConfirmPassword">{t('signup.confirmPassword')}</Form.Label>
               <Form.Text className="text-danger">
                 {
-                                    (formik.errors.confirmPassword
-                                        && formik.touched.confirmPassword
-                                        && <ErrorMessage message={formik.errors.confirmPassword} />)
-                                    || <ErrorMessage message={signUpError} />
-                                }
+                  (formik.errors.confirmPassword
+                    && formik.touched.confirmPassword
+                    && <ErrorMessage message={formik.errors.confirmPassword} />)
+                    || <ErrorMessage message={signUpError} />
+                }
               </Form.Text>
             </Form.Group>
             <Button
@@ -145,7 +145,6 @@ const SignUpPage = () => {
           </Form>
           <p className="mt-3">
             {t('signup.hasAccount')}
-            {' '}
             <Link to="/login">{t('login.title')}</Link>
           </p>
         </Col>
