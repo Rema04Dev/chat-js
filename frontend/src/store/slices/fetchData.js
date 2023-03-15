@@ -10,8 +10,6 @@ const fetchData = createAsyncThunk(
       const { data } = response;
       return data;
     } catch (err) {
-      console.log(err);
-      // return rejectWithValue({ status: err.response.status });
       return rejectWithValue({
         message: err?.message,
         status: err?.response?.status,
