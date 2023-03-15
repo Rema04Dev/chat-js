@@ -6,6 +6,7 @@ const initialState = {
   channels: [],
   currentChannelId: 1,
   loading: false,
+  error: null,
 };
 
 const channelsSlice = createSlice({
@@ -41,6 +42,10 @@ const channelsSlice = createSlice({
         const { channels, currentChannelId } = action.payload;
         state.channels = channels;
         state.currentChannelId = currentChannelId;
+        state.loading = false;
+      })
+      .addCase(fetchData.rejected, (state, action) => {
+        state.error = action.payload;
         state.loading = false;
       });
   },

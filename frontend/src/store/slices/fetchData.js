@@ -11,7 +11,12 @@ const fetchData = createAsyncThunk(
       return data;
     } catch (err) {
       console.log(err);
-      return rejectWithValue({ status: err.response.status });
+      // return rejectWithValue({ status: err.response.status });
+      return rejectWithValue({
+        message: err?.message,
+        status: err?.response?.status,
+        isAxiosError: err?.isAxiosError,
+      });
     }
   },
 );

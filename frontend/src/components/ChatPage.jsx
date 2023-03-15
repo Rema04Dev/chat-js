@@ -7,9 +7,10 @@ import Channels from './Channels/Channels';
 import Messages from './Messages/Messages';
 import useAuth from '../hooks/useAuth.hook.js';
 import getModal from './modals/index';
+import notification from '../utils/notify.js';
 
 const ChatPage = () => {
-  const loading = useSelector((state) => state.channels.loading);
+  const { loading, error } = useSelector((state) => state.channels);
   const { getAuthHeaders, logOut } = useAuth();
   const dispatch = useDispatch();
   const modalType = useSelector((state) => state.modals.modalType);
@@ -25,14 +26,19 @@ const ChatPage = () => {
       const headers = getAuthHeaders();
       dispatch(fetchData(headers))
         .unwrap()
-        .catch(({ status }) => {
+        .catch(({ status, isAxiosError, message }) => {
+          console.log(message);
           if (status === 401) {
             logOut();
+          }
+
+          if (isAxiosError) {
+            notification.error(message);
           }
         });
     };
     getData();
-  }, [dispatch, getAuthHeaders, logOut]);
+  }, [dispatch, getAuthHeaders, logOut, error]);
 
   if (loading) {
     return (
