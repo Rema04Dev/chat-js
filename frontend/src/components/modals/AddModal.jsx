@@ -7,10 +7,10 @@ import {
 import * as Yup from 'yup';
 import leoProfanity from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { hideModal } from '../../store/slices/modalsSlice';
 import * as channelsActions from '../../store/slices/channelsSlice';
 
-import { showAddNotification, showErrorNotification } from '../../utils/notify';
 import useSocket from '../../hooks/useSocket.hook';
 import CustomSpinner from '../skeletons/CustomSpinner';
 
@@ -49,9 +49,9 @@ const AddModal = () => {
         const response = await socketApi.addChannel(channelData);
         dispatch(channelsActions.setCurrentChannelId(response.id));
         dispatch(hideModal());
-        showAddNotification(t('addModal.success'));
+        toast.success(t('addModal.success'), { icon: '🚀' });
       } catch (error) {
-        showErrorNotification(t('errors.unknown'));
+        toast.error(t('errors.unknown'));
       }
     },
   });

@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { hideModal } from '../../store/slices/modalsSlice';
 import useSocket from '../../hooks/useSocket.hook';
-import { showRemoveNotification, showErrorNotification } from '../../utils/notify';
 
 const RemoveModal = () => {
   const dispatch = useDispatch();
@@ -14,11 +14,11 @@ const RemoveModal = () => {
   const handleRemove = async () => {
     try {
       await socketApi.removeChannel({ id: channelId });
-      showRemoveNotification(t('removeModal.success'));
+      toast.warning(t('removeModal.success'), { icon: '🔥' });
       dispatch(hideModal());
     } catch (err) {
       console.error(err);
-      showErrorNotification(t('errors.unknown'));
+      toast.error(t('errors.unknown'));
     }
   };
 

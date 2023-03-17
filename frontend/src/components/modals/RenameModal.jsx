@@ -7,7 +7,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import leoProfanity from 'leo-profanity';
-import { showRenameNotification, showErrorNotification } from '../../utils/notify';
+import { toast } from 'react-toastify';
 import { hideModal } from '../../store/slices/modalsSlice';
 import useSocket from '../../hooks/useSocket.hook';
 import CustomSpinner from '../skeletons/CustomSpinner';
@@ -42,9 +42,9 @@ const RenameModal = () => {
       try {
         await socketApi.renameChannel({ id: channelId, name: cleanedName });
         dispatch(hideModal());
-        showRenameNotification(t('renameModal.success'));
+        toast.info(t('renameModal.success'), { icon: '✏️' });
       } catch (err) {
-        showErrorNotification(t('errors.unknown'));
+        toast.error(t('errors.unknown'));
       }
     },
   });

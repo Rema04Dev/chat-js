@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Spinner } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import fetchData from '../store/slices/fetchData';
 import Channels from './Channels/Channels';
 import Messages from './Messages/Messages';
 import useAuth from '../hooks/useAuth.hook.js';
 import getModal from './modals/index';
-import { showErrorNotification } from '../utils/notify.js';
 
 const ChatPage = () => {
   const dispatch = useDispatch();
@@ -35,9 +35,9 @@ const ChatPage = () => {
             logOut();
           }
           if (err.isAxiosError) {
-            showErrorNotification(t('errors.network'));
+            toast.error(t('errors.network'));
           } else {
-            showErrorNotification(t('errors.unknown'));
+            toast.error(t('errors.unknown'));
           }
         });
     };
