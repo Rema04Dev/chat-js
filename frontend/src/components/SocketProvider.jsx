@@ -1,5 +1,5 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import { useDispatch } from 'react-redux';
-import { useMemo } from 'react';
 import SocketContext from '../contexts/SocketContext';
 import * as messagesActions from '../store/slices/messagesSlice';
 import * as channelsActions from '../store/slices/channelsSlice';
@@ -38,10 +38,8 @@ const SocketProvider = ({ children, socket }) => {
     dispatch(channelsActions.removeChannel(channelId));
   });
 
-  const socketValue = useMemo(() => ({ socketApi }), []);
-
   return (
-    <SocketContext.Provider value={socketValue}>
+    <SocketContext.Provider value={socketApi}>
       {children}
     </SocketContext.Provider>
   );
