@@ -1,6 +1,8 @@
 import { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Form, Button, Modal } from 'react-bootstrap';
+import {
+  Form, Button, Modal, FormText,
+} from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +10,6 @@ import leoProfanity from 'leo-profanity';
 import { showRenameNotification, showErrorNotification } from '../../utils/notify';
 import { hideModal } from '../../store/slices/modalsSlice';
 import useSocket from '../../hooks/useSocket.hook';
-import ErrorMessage from '../ErrorMessage';
 import CustomSpinner from '../skeletons/CustomSpinner';
 
 const RenameModal = () => {
@@ -76,7 +77,7 @@ const RenameModal = () => {
             {
               formik.errors.name
               && formik.touched.name
-              && <ErrorMessage message={formik.errors.name} />
+              && <FormText className="feedback text-danger mt-3">{formik.errors.name}</FormText>
             }
           </Form.Group>
           <div>

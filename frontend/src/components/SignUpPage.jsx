@@ -1,14 +1,13 @@
 import { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
-  Form, Button, Container, Row, Col,
+  Form, Button, Container, Row, Col, FormText,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import AuthContext from '../contexts/AuthContext';
-import ErrorMessage from './ErrorMessage';
 import CustomSpinner from './skeletons/CustomSpinner';
 import routes from '../utils/routes';
 
@@ -82,7 +81,7 @@ const SignUpPage = () => {
               {
                 formik.errors.username
                 && formik.touched.username
-                && <ErrorMessage message={formik.errors.username} />
+                && <FormText className="feedback text-danger mt-3">{formik.errors.username}</FormText>
               }
             </Form.Group>
             <Form.Group className="mb-3 form-floating">
@@ -102,7 +101,7 @@ const SignUpPage = () => {
                 {
                   formik.errors.password
                   && formik.touched.password
-                  && <ErrorMessage message={formik.errors.password} />
+                  && <FormText className="feedback text-danger mt-3">{formik.errors.password}</FormText>
                 }
               </Form.Text>
             </Form.Group>
@@ -123,8 +122,8 @@ const SignUpPage = () => {
                 {
                   (formik.errors.confirmPassword
                     && formik.touched.confirmPassword
-                    && <ErrorMessage message={formik.errors.confirmPassword} />)
-                    || <ErrorMessage message={signUpError} />
+                    && <FormText className="feedback text-danger mt-3">{formik.errors.confirmPassword}</FormText>)
+                    || <FormText className="feedback text-danger mt-3">{signUpError}</FormText>
                 }
               </Form.Text>
             </Form.Group>

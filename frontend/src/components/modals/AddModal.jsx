@@ -1,7 +1,9 @@
 import { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
-import { Form, Button, Modal } from 'react-bootstrap';
+import {
+  Form, Button, Modal, FormText,
+} from 'react-bootstrap';
 import * as Yup from 'yup';
 import leoProfanity from 'leo-profanity';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +12,6 @@ import * as channelsActions from '../../store/slices/channelsSlice';
 
 import { showAddNotification, showErrorNotification } from '../../utils/notify';
 import useSocket from '../../hooks/useSocket.hook';
-import ErrorMessage from '../ErrorMessage';
 import CustomSpinner from '../skeletons/CustomSpinner';
 
 const AddModal = () => {
@@ -76,7 +77,7 @@ const AddModal = () => {
             {
               formik.errors.name
               && formik.touched.name
-              && <ErrorMessage message={formik.errors.name} />
+              && <FormText className="feedback text-danger mt-3">{formik.errors.name}</FormText>
             }
             <Form.Label className="visually-hidden">
               {t('addModal.channelName')}
