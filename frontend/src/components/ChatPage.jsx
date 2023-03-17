@@ -11,7 +11,7 @@ import getModal from './modals/index';
 
 const ChatPage = () => {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.channels);
+  const { loading } = useSelector((state) => state.channels);
   const modalType = useSelector((state) => state.modals.modalType);
 
   const { getAuthHeaders, logOut } = useAuth();
@@ -44,7 +44,7 @@ const ChatPage = () => {
         });
     };
     getData();
-  }, [dispatch, getAuthHeaders, logOut, error, t]);
+  }, [dispatch, getAuthHeaders, logOut, t]);
 
   if (loading) {
     return (
