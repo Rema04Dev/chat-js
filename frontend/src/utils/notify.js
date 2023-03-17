@@ -1,10 +1,6 @@
 import { toast } from 'react-toastify';
 
-const notification = {
-  add: (message) => toast.success(message, { icon: '🚀' }),
-  remove: (message) => toast.warning(message, { icon: '🔥' }),
-  rename: (message) => toast.info(message, { icon: '✏️' }),
-  error: (message) => toast.error(message),
-};
-
-export default notification;
+export const showAddNotification = (message) => toast.success(message, { icon: '🚀' });
+export const showRemoveNotification = (message) => toast.warning(message, { icon: '🔥' });
+export const showRenameNotification = (message) => toast.info(message, { icon: '✏️' });
+export const showErrorNotification = (message) => toast.error(message);

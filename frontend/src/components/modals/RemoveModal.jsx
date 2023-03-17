@@ -3,7 +3,7 @@ import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { hideModal } from '../../store/slices/modalsSlice';
 import useSocket from '../../hooks/useSocket.hook';
-import notification from '../../utils/notify';
+import { showRemoveNotification, showErrorNotification } from '../../utils/notify';
 
 const RemoveModal = () => {
   const dispatch = useDispatch();
@@ -14,11 +14,11 @@ const RemoveModal = () => {
   const handleRemove = async () => {
     try {
       await socketApi.removeChannel({ id: channelId });
-      notification.remove(t('removeModal.success'));
+      showRemoveNotification(t('removeModal.success'));
       dispatch(hideModal());
     } catch (err) {
       console.error(err);
-      notification.error('oops');
+      showErrorNotification(t('errors.unknown'));
     }
   };
 

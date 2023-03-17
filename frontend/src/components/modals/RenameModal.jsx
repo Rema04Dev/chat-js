@@ -5,7 +5,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import leoProfanity from 'leo-profanity';
-import notification from '../../utils/notify';
+import { showRenameNotification, showErrorNotification } from '../../utils/notify';
 import { hideModal } from '../../store/slices/modalsSlice';
 import useSocket from '../../hooks/useSocket.hook';
 import ErrorMessage from '../ErrorMessage';
@@ -41,9 +41,9 @@ const RenameModal = () => {
       try {
         await socketApi.renameChannel({ id: channelId, name: cleanedName });
         dispatch(hideModal());
-        notification.rename(t('renameModal.success'));
+        showRenameNotification(t('renameModal.success'));
       } catch (err) {
-        notification.error('oops');
+        showErrorNotification(t('errors.unknown'));
       }
     },
   });

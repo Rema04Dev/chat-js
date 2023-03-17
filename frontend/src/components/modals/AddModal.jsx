@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { hideModal } from '../../store/slices/modalsSlice';
 import * as channelsActions from '../../store/slices/channelsSlice';
 
-import notification from '../../utils/notify';
+import { showAddNotification, showErrorNotification } from '../../utils/notify';
 import useSocket from '../../hooks/useSocket.hook';
 import ErrorMessage from '../ErrorMessage';
 import CustomSpinner from '../skeletons/CustomSpinner';
@@ -48,9 +48,9 @@ const AddModal = () => {
         const response = await socketApi.addChannel(channelData);
         dispatch(channelsActions.setCurrentChannelId(response.id));
         dispatch(hideModal());
-        notification.add(t('addModal.success'));
+        showAddNotification(t('addModal.success'));
       } catch (error) {
-        notification.error('oops');
+        showErrorNotification(t('errors.unknown'));
       }
     },
   });

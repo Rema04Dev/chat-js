@@ -8,7 +8,7 @@ import Channels from './Channels/Channels';
 import Messages from './Messages/Messages';
 import useAuth from '../hooks/useAuth.hook.js';
 import getModal from './modals/index';
-import notification from '../utils/notify.js';
+import { showErrorNotification } from '../utils/notify.js';
 
 const ChatPage = () => {
   const dispatch = useDispatch();
@@ -36,9 +36,9 @@ const ChatPage = () => {
             logOut();
           }
           if (err.isAxiosError) {
-            notification.error(t('errors.network'));
+            showErrorNotification(t('errors.network'));
           } else {
-            notification.error(t('errors.unknown'));
+            showErrorNotification(t('errors.unknown'));
           }
         });
     };
