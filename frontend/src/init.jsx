@@ -1,7 +1,6 @@
 import i18next from 'i18next';
 import leoProfanity from 'leo-profanity';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-import { BrowserRouter } from 'react-router-dom';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import Rollbar from 'rollbar';
 import { Provider } from 'react-redux';
@@ -35,13 +34,11 @@ const init = async (socket) => {
     <RollbarProvider config={rollbar}>
       <ErrorBoundary>
         <I18nextProvider i18n={i18n}>
-          <BrowserRouter>
-            <Provider store={store}>
-              <SocketProvider socket={socket}>
-                <App />
-              </SocketProvider>
-            </Provider>
-          </BrowserRouter>
+          <Provider store={store}>
+            <SocketProvider socket={socket}>
+              <App />
+            </SocketProvider>
+          </Provider>
         </I18nextProvider>
       </ErrorBoundary>
     </RollbarProvider>
