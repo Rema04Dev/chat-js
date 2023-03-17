@@ -30,14 +30,16 @@ const ChatPage = () => {
       const headers = getAuthHeaders();
       dispatch(fetchData(headers))
         .unwrap()
-        .catch((err) => {
-          if (err.status === 401) {
-            logOut();
-          }
-          if (err.isAxiosError) {
-            toast.error(t('errors.network'));
-          } else {
+        .catch((e) => {
+          if (!e.isAxiosError) {
             toast.error(t('errors.unknown'));
+            return;
+          }
+          if (e.isAxiosError) {
+            toast.error(t('errors.network'));
+          }
+          if (e.status === 401) {
+            logOut();
           }
         });
     };
