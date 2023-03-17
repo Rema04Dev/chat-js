@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import AuthContext from '../contexts/AuthContext';
 import CustomSpinner from './skeletons/CustomSpinner';
 import routes from '../utils/routes';
@@ -51,8 +52,12 @@ const SignUpPage = () => {
         logIn({ ...response.data });
         navigate('/');
       } catch (e) {
+        if (!e.isAxiosError) {
+          toast.error(t('errors.unknown'));
+          return;
+        }
         const { status } = e.response;
-        const message = status === 409 ? t('signup.validation.alreadyExists') : t('errors.unknown');
+        const message = status === 409 && t('signup.validation.alreadyExists');
         setSignUpError(message);
         throw e;
       }

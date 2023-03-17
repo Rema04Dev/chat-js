@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import AuthContext from '../contexts/AuthContext';
 import CustomSpinner from './skeletons/CustomSpinner';
 import routes from '../utils/routes';
@@ -32,8 +33,12 @@ const LoginPage = () => {
         logIn(response.data);
         navigate('/');
       } catch (e) {
-        const message = e.response.statusText === 'Unauthorized'
-          ? t('login.validation.failed') : t('errors.unknown');
+        if (!e.isAxiosError) {
+          toast.error(t('errors.unknown'));
+          return;
+        }
+        const { statusText } = e.response;
+        const message = statusText === 'Unauthorized' && t('login.validation.failed');
         setAuthError(message);
         throw e;
       }
