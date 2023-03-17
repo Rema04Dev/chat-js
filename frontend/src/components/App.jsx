@@ -1,4 +1,5 @@
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import ChatPage from './ChatPage';
 import LoginPage from './LoginPage';
 import SignUpPage from './SignUpPage';
@@ -19,6 +20,18 @@ const App = () => (
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover={false}
+        theme="dark"
+      />
     </AuthProvider>
   </BrowserRouter>
 );

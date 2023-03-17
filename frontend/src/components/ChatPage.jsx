@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Row, Spinner } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { ToastContainer } from 'react-toastify';
 import fetchData from '../store/slices/fetchData';
 import Channels from './Channels/Channels';
 import Messages from './Messages/Messages';
@@ -58,27 +57,13 @@ const ChatPage = () => {
     );
   }
   return (
-    <>
-      <Container className="h-100 my-4 overflow-hidden rounded shadow">
-        <Row className="h-100 bg-white flex-md-row">
-          <Channels />
-          <Messages />
-        </Row>
-        {renderModal(modalType)}
-      </Container>
-      <ToastContainer
-        position="bottom-left"
-        autoClose={1500}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable
-        pauseOnHover={false}
-        theme="dark"
-      />
-    </>
+    <Container className="h-100 my-4 overflow-hidden rounded shadow">
+      <Row className="h-100 bg-white flex-md-row">
+        <Channels />
+        <Messages />
+      </Row>
+      {renderModal(modalType)}
+    </Container>
   );
 };
 
