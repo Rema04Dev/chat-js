@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { hideModal } from '../../store/slices/modalsSlice';
 import useSocket from '../../hooks/useSocket.hook';
+import CustomSpinner from '../skeletons/CustomSpinner';
 
 const RemoveModal = () => {
+  const [sending, setSending] = useState(false);
   const dispatch = useDispatch();
   const channelId = useSelector((state) => state.modals.channelId);
   const { socketApi } = useSocket();
@@ -13,12 +16,15 @@ const RemoveModal = () => {
 
   const handleRemove = async () => {
     try {
+      setSending(true);
       await socketApi.removeChannel({ id: channelId });
       toast.warning(t('removeModal.success'), { icon: '🔥' });
       dispatch(hideModal());
+      setSending(false);
     } catch (err) {
       console.error(err);
       toast.error(t('errors.unknown'));
+      setSending(false);
     }
   };
 
@@ -44,6 +50,7 @@ const RemoveModal = () => {
             role="button"
             onClick={handleRemove}
           >
+            {sending ? <CustomSpinner size="sm" /> : null}
             {t('removeModal.remove')}
           </Button>
         </div>
