@@ -32,9 +32,9 @@ const RenameModal = () => {
     validationSchema: Yup.object({
       name: Yup
         .string()
-        .min(3, t('renameModal.validation.length'))
-        .notOneOf(channels.map((channel) => channel.name), t('renameModal.validation.unique'))
-        .required(t('renameModal.validation.required')),
+        .min(3, 'renameModal.validation.length')
+        .notOneOf(channels.map((channel) => channel.name), 'renameModal.validation.unique')
+        .required('renameModal.validation.required'),
     }),
 
     onSubmit: async (values) => {
@@ -77,7 +77,7 @@ const RenameModal = () => {
             {
               formik.errors.name
               && formik.touched.name
-              && <FormText className="feedback text-danger mt-3">{formik.errors.name}</FormText>
+              && <FormText className="feedback text-danger mt-3">{t(formik.errors.name)}</FormText>
             }
           </Form.Group>
           <div>
