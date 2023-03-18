@@ -44,6 +44,7 @@ const RenameModal = () => {
         dispatch(hideModal());
         toast.info(t('renameModal.success'), { icon: '✏️' });
       } catch (err) {
+        console.error(err);
         toast.error(t('errors.unknown'));
       }
     },

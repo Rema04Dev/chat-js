@@ -50,7 +50,8 @@ const AddModal = () => {
         dispatch(channelsActions.setCurrentChannelId(response.id));
         dispatch(hideModal());
         toast.success(t('addModal.success'), { icon: '🚀' });
-      } catch (error) {
+      } catch (err) {
+        console.error(err);
         toast.error(t('errors.unknown'));
       }
     },
