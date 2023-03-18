@@ -28,17 +28,17 @@ const SignUpPage = () => {
     validationSchema: Yup.object({
       username: Yup
         .string()
-        .min(3, t('signup.validation.usernameLength'))
-        .max(20, t('signup.validation.usernameLength'))
-        .required(t('signup.validation.required')),
+        .min(3, 'signup.validation.usernameLength')
+        .max(20, 'signup.validation.usernameLength')
+        .required('signup.validation.required'),
       password: Yup
         .string()
-        .min(6, t('signup.validation.passwordLength'))
-        .required(t('signup.validation.required')),
+        .min(6, 'signup.validation.passwordLength')
+        .required('signup.validation.required'),
       confirmPassword: Yup
         .string()
-        .oneOf([Yup.ref('password'), null], t('signup.validation.mustMatch'))
-        .required(t('signup.validation.required')),
+        .oneOf([Yup.ref('password'), null], 'signup.validation.mustMatch')
+        .required('signup.validation.required'),
     }),
 
     onSubmit: async (values) => {
@@ -57,7 +57,7 @@ const SignUpPage = () => {
           return;
         }
         const { status } = e.response;
-        const message = status === 409 && t('signup.validation.alreadyExists');
+        const message = status === 409 && 'signup.validation.alreadyExists';
         setSignUpError(message);
         throw e;
       }
@@ -86,7 +86,7 @@ const SignUpPage = () => {
               {
                 formik.errors.username
                 && formik.touched.username
-                && <FormText className="feedback text-danger mt-3">{formik.errors.username}</FormText>
+                && <FormText className="feedback text-danger mt-3">{t(formik.errors.username)}</FormText>
               }
             </Form.Group>
             <Form.Group className="mb-3 form-floating">
@@ -106,7 +106,7 @@ const SignUpPage = () => {
                 {
                   formik.errors.password
                   && formik.touched.password
-                  && <FormText className="feedback text-danger mt-3">{formik.errors.password}</FormText>
+                  && <FormText className="feedback text-danger mt-3">{t(formik.errors.password)}</FormText>
                 }
               </Form.Text>
             </Form.Group>
@@ -123,14 +123,12 @@ const SignUpPage = () => {
                 isInvalid={formik.errors.confirmPassword && formik.touched.confirmPassword}
               />
               <Form.Label htmlFor="floatingConfirmPassword">{t('signup.confirmPassword')}</Form.Label>
-              <Form.Text className="text-danger">
-                {
+              {
                   (formik.errors.confirmPassword
                     && formik.touched.confirmPassword
-                    && <FormText className="feedback text-danger mt-3">{formik.errors.confirmPassword}</FormText>)
-                    || <FormText className="feedback text-danger mt-3">{signUpError}</FormText>
+                    && <FormText className="feedback text-danger mt-3">{t(formik.errors.confirmPassword)}</FormText>)
+                    || <FormText className="feedback text-danger mt-3">{t(signUpError)}</FormText>
                 }
-              </Form.Text>
             </Form.Group>
             <Button
               disabled={formik.isSubmitting}

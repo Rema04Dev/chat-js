@@ -38,7 +38,7 @@ const LoginPage = () => {
           return;
         }
         const { statusText } = e.response;
-        const message = statusText === 'Unauthorized' && t('login.validation.failed');
+        const message = statusText === 'Unauthorized' && 'login.validation.failed';
         setAuthError(message);
         throw e;
       }
@@ -46,10 +46,10 @@ const LoginPage = () => {
     validationSchema: Yup.object({
       username: Yup
         .string()
-        .required(t('login.validation.required')),
+        .required('login.validation.required'),
       password: Yup
         .string()
-        .required(t('login.validation.required')),
+        .required('login.validation.required'),
     }),
   });
 
@@ -77,7 +77,7 @@ const LoginPage = () => {
               {
                 formik.errors.username
                 && formik.touched.username
-                && <FormText className="feedback text-danger mt-3">{formik.errors.username}</FormText>
+                && <FormText className="feedback text-danger mt-3">{t(formik.errors.username)}</FormText>
               }
 
             </Form.Group>
@@ -94,14 +94,12 @@ const LoginPage = () => {
                 className={formik.errors.password && formik.touched.password ? 'is-invalid' : ''}
               />
               <Form.Label htmlFor="floatingPassword">{t('login.password')}</Form.Label>
-              <Form.Text className="text-danger">
-                {
+              {
                   formik.errors.password
                   && formik.touched.password
-                  && <FormText className="feedback text-danger mt-3">{formik.errors.password}</FormText>
+                  && <FormText className="feedback text-danger mt-3">{t(formik.errors.password)}</FormText>
                 }
-              </Form.Text>
-              <FormText className="feedback text-danger mt-3">{authError}</FormText>
+              <FormText className="feedback text-danger mt-3">{t(authError)}</FormText>
             </Form.Group>
             <Button
               disabled={formik.isSubmitting}
