@@ -33,9 +33,9 @@ const AddModal = () => {
     validationSchema: Yup.object({
       name: Yup
         .string()
-        .min(3, t('addModal.validation.length'))
-        .notOneOf(channels.map((channel) => channel.name), t('addModal.validation.unique'))
-        .required(t('addModal.validation.required')),
+        .min(3, 'addModal.validation.length')
+        .notOneOf(channels.map((channel) => channel.name), 'addModal.validation.unique')
+        .required('addModal.validation.required'),
     }),
 
     onSubmit: async (values) => {
@@ -77,7 +77,7 @@ const AddModal = () => {
             {
               formik.errors.name
               && formik.touched.name
-              && <FormText className="feedback text-danger mt-3">{formik.errors.name}</FormText>
+              && <FormText className="feedback text-danger mt-3">{t(formik.errors.name)}</FormText>
             }
             <Form.Label className="visually-hidden">
               {t('addModal.channelName')}
