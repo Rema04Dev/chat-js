@@ -12,7 +12,7 @@ import CustomSpinner from '../skeletons/CustomSpinner';
 
 const MessagesForm = () => {
   const { user } = useAuth();
-  const { socketApi } = useSocket();
+  const socketApi = useSocket();
   const { currentChannelId } = useSelector((state) => state.channels);
   const inputEl = useRef();
   const { t } = useTranslation();

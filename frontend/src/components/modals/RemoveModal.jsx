@@ -11,7 +11,7 @@ const RemoveModal = () => {
   const [sending, setSending] = useState(false);
   const dispatch = useDispatch();
   const channelId = useSelector((state) => state.modals.channelId);
-  const { socketApi } = useSocket();
+  const socketApi = useSocket();
   const { t } = useTranslation();
 
   const handleRemove = async () => {

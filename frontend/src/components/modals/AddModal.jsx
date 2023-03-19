@@ -18,7 +18,7 @@ const AddModal = () => {
   const channels = useSelector((state) => state.channels.channels);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { socketApi } = useSocket();
+  const socketApi = useSocket();
   const inputEl = useRef();
 
   useEffect(() => {

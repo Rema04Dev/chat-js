@@ -17,7 +17,7 @@ const RenameModal = () => {
   const channelId = useSelector((state) => state.modals.channelId);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { socketApi } = useSocket();
+  const socketApi = useSocket();
   const inputEl = useRef();
 
   useEffect(() => {
