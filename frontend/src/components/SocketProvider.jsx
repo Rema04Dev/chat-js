@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import SocketContext from '../contexts/SocketContext';
 import * as messagesActions from '../store/slices/messagesSlice';
 import * as channelsActions from '../store/slices/channelsSlice';
@@ -25,18 +25,20 @@ const SocketProvider = ({ children, socket }) => {
     removeChannel: (data) => promisifySocket(socket, 'removeChannel', data),
   }), [socket]);
 
-  socket.on('newMessage', (message) => {
-    dispatch(messagesActions.addMessage(message));
-  });
-  socket.on('newChannel', (channel) => {
-    dispatch(channelsActions.addChannel(channel));
-  });
-  socket.on('renameChannel', (channelName) => {
-    dispatch(channelsActions.renameChannel(channelName));
-  });
-  socket.on('removeChannel', (channelId) => {
-    dispatch(channelsActions.removeChannel(channelId));
-  });
+  useEffect(() => {
+    socket.on('newMessage', (message) => {
+      dispatch(messagesActions.addMessage(message));
+    });
+    socket.on('newChannel', (channel) => {
+      dispatch(channelsActions.addChannel(channel));
+    });
+    socket.on('renameChannel', (channelName) => {
+      dispatch(channelsActions.renameChannel(channelName));
+    });
+    socket.on('removeChannel', (channelId) => {
+      dispatch(channelsActions.removeChannel(channelId));
+    });
+  }, [socket, dispatch]);
 
   return (
     <SocketContext.Provider value={socketApi}>
