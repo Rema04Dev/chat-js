@@ -141,7 +141,7 @@ const SignUpPage = () => {
           </Form>
           <p className="mt-3">
             {t('signup.hasAccount')}
-            <Link to="/login">{t('login.title')}</Link>
+            <Link style={{ marginLeft: 5 }} to="/login">{t('login.title')}</Link>
           </p>
         </Col>
       </Row>
