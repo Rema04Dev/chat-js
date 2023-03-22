@@ -30,6 +30,10 @@ const ru = {
         required: 'Обязательное поле',
       },
     },
+    notFoundPage: {
+      title: 'Страница не найдена',
+      link: 'Перейти на главную',
+    },
     channels: {
       title: 'Каналы',
       remove: 'Удалить',
