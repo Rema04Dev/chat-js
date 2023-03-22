@@ -7,6 +7,7 @@ import NotFoundPage from './NotFoundPage';
 import ChatHeader from './ChatHeader.jsx';
 import PrivateRoute from './PrivateRoute';
 import AuthProvider from './AuthProvider';
+import routes from '../utils/routes';
 
 const App = () => (
   <BrowserRouter>
@@ -14,11 +15,11 @@ const App = () => (
       <ChatHeader />
       <Routes>
         <Route element={<PrivateRoute />}>
-          <Route path="/" element={<ChatPage />} />
+          <Route path={routes.home} element={<ChatPage />} />
         </Route>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path={routes.login} element={<LoginPage />} />
+        <Route path={routes.signup} element={<SignUpPage />} />
+        <Route path={routes.error} element={<NotFoundPage />} />
       </Routes>
       <ToastContainer
         position="bottom-left"

@@ -50,7 +50,7 @@ const SignUpPage = () => {
       try {
         const response = await axios.post(routes.signupPath(), userData);
         logIn({ ...response.data });
-        navigate('/');
+        navigate(routes.home);
       } catch (e) {
         if (!e.isAxiosError) {
           toast.error(t('errors.unknown'));
