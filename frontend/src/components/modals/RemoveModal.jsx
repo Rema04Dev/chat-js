@@ -4,20 +4,20 @@ import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { hideModal } from '../../store/slices/modalsSlice';
-import useSocket from '../../hooks/useSocket.hook';
+import useApi from '../../hooks/useApi';
 import CustomSpinner from '../skeletons/CustomSpinner';
 
 const RemoveModal = () => {
   const [sending, setSending] = useState(false);
   const dispatch = useDispatch();
   const channelId = useSelector((state) => state.modals.channelId);
-  const socketApi = useSocket();
+  const chatApi = useApi();
   const { t } = useTranslation();
 
   const handleRemove = async () => {
     try {
       setSending(true);
-      await socketApi.removeChannel({ id: channelId });
+      await chatApi.removeChannel({ id: channelId });
       toast.warning(t('removeModal.success'), { icon: '🔥' });
       dispatch(hideModal());
       setSending(false);

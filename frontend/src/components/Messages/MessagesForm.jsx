@@ -7,12 +7,12 @@ import * as Yup from 'yup';
 import leoProfanity from 'leo-profanity';
 import { ArrowRight } from 'react-bootstrap-icons';
 import useAuth from '../../hooks/useAuth.hook';
-import useSocket from '../../hooks/useSocket.hook';
+import useApi from '../../hooks/useApi';
 import CustomSpinner from '../skeletons/CustomSpinner';
 
 const MessagesForm = () => {
   const { user } = useAuth();
-  const socketApi = useSocket();
+  const chatApi = useApi();
   const { currentChannelId } = useSelector((state) => state.channels);
   const inputEl = useRef();
   const { t } = useTranslation();
@@ -39,7 +39,7 @@ const MessagesForm = () => {
         username: user.username,
       };
       try {
-        await socketApi.addMessage(messageData);
+        await chatApi.addMessage(messageData);
         formik.resetForm();
       } catch (error) {
         console.error(error);

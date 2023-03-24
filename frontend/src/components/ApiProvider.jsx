@@ -15,7 +15,7 @@ const promisifySocket = (socket, event, data) => new Promise((resolve, reject) =
   });
 });
 
-const SocketProvider = ({ children, socket }) => {
+const ApiProvider = ({ children, socket }) => {
   const dispatch = useDispatch();
 
   const socketApi = useMemo(() => ({
@@ -47,4 +47,4 @@ const SocketProvider = ({ children, socket }) => {
   );
 };
 
-export default SocketProvider;
+export default ApiProvider;

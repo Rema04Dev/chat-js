@@ -11,14 +11,14 @@ import { toast } from 'react-toastify';
 import { hideModal } from '../../store/slices/modalsSlice';
 import * as channelsActions from '../../store/slices/channelsSlice';
 
-import useSocket from '../../hooks/useSocket.hook';
+import useApi from '../../hooks/useApi';
 import CustomSpinner from '../skeletons/CustomSpinner';
 
 const AddModal = () => {
   const channels = useSelector((state) => state.channels.channels);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const socketApi = useSocket();
+  const chatApi = useApi();
   const inputEl = useRef();
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const AddModal = () => {
       };
 
       try {
-        const response = await socketApi.addChannel(channelData);
+        const response = await chatApi.addChannel(channelData);
         dispatch(channelsActions.setCurrentChannelId(response.id));
         dispatch(hideModal());
         toast.success(t('addModal.success'), { icon: '🚀' });

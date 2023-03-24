@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import leoProfanity from 'leo-profanity';
 import { toast } from 'react-toastify';
 import { hideModal } from '../../store/slices/modalsSlice';
-import useSocket from '../../hooks/useSocket.hook';
+import useApi from '../../hooks/useApi';
 import CustomSpinner from '../skeletons/CustomSpinner';
 
 const RenameModal = () => {
@@ -17,7 +17,7 @@ const RenameModal = () => {
   const channelId = useSelector((state) => state.modals.channelId);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const socketApi = useSocket();
+  const chatApi = useApi();
   const inputEl = useRef();
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const RenameModal = () => {
     onSubmit: async (values) => {
       const cleanedName = leoProfanity.clean(values.name);
       try {
-        await socketApi.renameChannel({ id: channelId, name: cleanedName });
+        await chatApi.renameChannel({ id: channelId, name: cleanedName });
         dispatch(hideModal());
         toast.info(t('renameModal.success'), { icon: '✏️' });
       } catch (err) {

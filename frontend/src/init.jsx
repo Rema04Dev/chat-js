@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import resources from './locales/index.js';
 import App from './components/App';
 import store from './store/store';
-import SocketProvider from './components/SocketProvider';
+import ApiProvider from './components/ApiProvider';
 
 const init = async (socket) => {
   const i18n = i18next.createInstance();
@@ -35,9 +35,9 @@ const init = async (socket) => {
       <ErrorBoundary>
         <I18nextProvider i18n={i18n}>
           <Provider store={store}>
-            <SocketProvider socket={socket}>
+            <ApiProvider socket={socket}>
               <App />
-            </SocketProvider>
+            </ApiProvider>
           </Provider>
         </I18nextProvider>
       </ErrorBoundary>
