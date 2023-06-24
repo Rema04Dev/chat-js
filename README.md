@@ -2,26 +2,35 @@
 
 [![Actions Status](https://github.com/Rema04Dev/chat-js/workflows/hexlet-check/badge.svg)](https://github.com/Rema04Dev/chat-js/actions)
 
-# React Chat-App
+# Chat-JS
 
-## Setup
+### Description
+
+This app is a simplified version of Slack chat.
+
+###### Key Features:
+
+**User Registration:** Create a new account with a unique username and password.<br>
+**Secure Login:** Access the chat system using a registered username and password.<br>
+**Channel Management:** Create, delete, and rename channels for organizing discussions.<br>
+**Real-time Messaging:** Send and receive messages in the chat interface in real time.<br>
+**Profanity Filter:** Automatically filter out inappropriate language to promote a positive and respectful chat environment.<br>
+
+---
+
+### Requirements
+
+Node.js version v.18.12.1 or later
+
+### Setup
 
 ```bash
+# clone this repository (ssh)
+git clone git@github.com:Rema04Dev/chat-js.git
+# install dependencies
 make install
-```
-
-## Development
-
-```bash
+# run locally
 make start
 ```
 
-On _localhost:3000_
-
-### Demonstration [chat-js](https://chat-js-production.up.railway.app/)
-
-[![Hexlet Ltd. logo](https://raw.githubusercontent.com/Hexlet/assets/master/images/hexlet_logo128.png)](https://hexlet.io/?utm_source=github&utm_medium=link&utm_campaign=react-application)
-
-This repository is created and maintained by the team and the community of Hexlet, an educational project. [Read more about Hexlet](https://hexlet.io/?utm_source=github&utm_medium=link&utm_campaign=react-application).
-
-See most active contributors on [hexlet-friends](https://friends.hexlet.io/).
+App will be started on _localhost:3000_
