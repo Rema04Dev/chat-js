@@ -1,3 +1,7 @@
+### tests and linter status:
+
+[![Actions Status](https://github.com/Rema04Dev/chat-js/workflows/hexlet-check/badge.svg)](https://github.com/Rema04Dev/chat-js/actions)
+
 # React Chat-App
 
 ## Setup
