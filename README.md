@@ -2,6 +2,8 @@
 
 [![Actions Status](https://github.com/Rema04Dev/chat-js/workflows/hexlet-check/badge.svg)](https://github.com/Rema04Dev/chat-js/actions)
 
+### [Demo](https://chat-js-production.up.railway.app/)
+
 # Chat-JS
 
 ### Description
